@@ -1,6 +1,6 @@
 {% block content %}
 
-	<form action="/collection/newriff/" method="post">
+	<form method="post">
 		{% csrf_token %}
 		{{ form }}
 		<input type="submit" value="Submit" />
