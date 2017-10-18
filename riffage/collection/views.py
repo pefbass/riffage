@@ -1,9 +1,12 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from .forms import NewRiffForm
 from .models import Riff
 
 def index(request):
-	return render(request, 'collection/index.html')
+	riffs = Riff.objects.all()
+	return render(request, 'collection/index.html',
+		{ 'riffs' : riffs })
 
 def new_riff(request):
 	if request.method == 'POST':
