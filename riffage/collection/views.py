@@ -1,9 +1,13 @@
+from django.http import *
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from .forms import NewRiffForm
 from .models import Riff
 
 def index(request):
-	return render(request, 'collection/index.html')
+	riffs = Riff.objects.all()
+	return render(request, 'collection/index.html',
+		{ 'riffs' : riffs })
 
 def new_riff(request):
 	if request.method == 'POST':
@@ -13,6 +17,8 @@ def new_riff(request):
 			riff = Riff()
 			riff.name = form.cleaned_data['name']
 			riff.save()
+
+			return render(request, 'collection/submit_success.html')
 
 	else:
 		form = NewRiffForm()

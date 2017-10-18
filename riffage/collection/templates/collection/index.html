@@ -1,5 +1,14 @@
-{% block content %}
+<h1>Collection</h1>
 
-	<h1>Riff Collection</h1>
+{% block content %}
+	{% for riff in riffs %}
+		<div class="Riff">
+			<h2><a href="https://wwww.google.com">{{ Riff.name }}</a></h2>
+			<p>{{ riff.name|linebreaksbr }}</p>
+		</div>
+		{{ riff }}
+	{% endfor %}
+
+	<a href="newriff">Submit New Riff</a>
 
 {% endblock %}
