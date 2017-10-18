@@ -15,7 +15,11 @@ def new_riff(request):
 
 		if form.is_valid():
 			riff = Riff()
-			riff.name = form.cleaned_data['name']
+			data = form.cleaned_data
+
+			for key in data:
+				riff[key] = data[key]
+			
 			riff.save()
 
 			return render(request, 'collection/submit_success.html')
