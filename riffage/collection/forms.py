@@ -1,4 +1,7 @@
-from django import forms
+from django.forms import ModelForm
+from .models import Riff
 
-class NewRiffForm(forms.Form):
-	name = forms.CharField(label='Riff Name', max_length='100')
+class NewRiffForm(ModelForm):
+	class Meta:
+		model = Riff
+		fields = ['name']
