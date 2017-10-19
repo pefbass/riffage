@@ -1,5 +1,8 @@
 from django.http import HttpResponse
-
+from django.shortcuts import render
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the accounts index.")
+     return render(request, 'index.html')
+
+def account(request):
+     return render(request, 'account.html')
