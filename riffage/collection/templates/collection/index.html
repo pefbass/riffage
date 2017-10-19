@@ -1,14 +1,38 @@
-<h1>Collection</h1>
+{% load staticfiles %}
+<html>
+	<head>
+		<title>Collection</title>
+		<link rel="stylesheet" href="{% static 'css/index.css' %}">
+	</head>
+	<body>
+		<h1>Collection</h1>
 
-{% block content %}
-	{% for riff in riffs %}
-		<div class="Riff">
-			<h2><a href="https://wwww.google.com">{{ Riff.name }}</a></h2>
-			<p>{{ riff.name|linebreaksbr }}</p>
-		</div>
-		{{ riff }}
-	{% endfor %}
+		{% block content %}
+			<table style="width:100%">
+			<tr>
+				<th>Riff</th>
+				<th>Last Updated</th>
+				<th>Key</th>
+				<th>Time Signature</th>
+				<th>Tags</th>
+				<th>Audio Included?</th>
+				<th>Notation Included?</th>
+			</tr>
+			{% for riff in riffs %}
+				<tr>
+					<td>{{ riff.name }}</td>
+					<td>Yesterday</td>
+					<td>{{ riff.riff_key }}</td>
+					<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
+					<td>Sweaty, slimy</td>
+					<td>No!</td>
+					<td>No!</td>
+				</tr>
+			{% endfor %}
+			</table>
 
-	<a href="newriff">Submit New Riff</a>
+			<a href="newriff">Add Riff</a>
 
-{% endblock %}
+		{% endblock %}
+	</body>
+</html>
