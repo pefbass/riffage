@@ -18,8 +18,8 @@ def new_riff(request):
 			data = form.cleaned_data
 
 			for key in data:
-				riff[key] = data[key]
-			
+				setattr(riff, key, data[key])
+
 			riff.save()
 
 			return render(request, 'collection/submit_success.html')
