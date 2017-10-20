@@ -2,7 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 def index(request):
-     return render(request, 'index.html')
+    return render(request, 'index.html')
 
-def account(request):
-     return render(request, 'account.html')
+def login(request):
+    return render(request, 'login.html')
+
+def create(request):
+    return render(request, 'create.html')
