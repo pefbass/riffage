@@ -53,7 +53,25 @@
 
     <!-- Page Content -->
     <div class="container">
-      <h1 class="mt-5">Create</h1>
+        <div class="lgn-container col-lg-6" style="margin: 0 auto; margin-top: 5em">
+        {% block content %}
+        <h2>Sign up</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </p>
+            {% endfor %}
+            
+            <button type="submit">Sign up</button>
+        </form>
+        {% endblock %}
+        </div>
     </div>
     <!-- /.container -->
 
