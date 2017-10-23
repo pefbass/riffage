@@ -1,55 +1,30 @@
 {% extends 'base.html' %}
 
-{% load staticfiles %}
-<html>
-	<head>
+{% block content %}
+	<h1>Collection</h1>
 
-	    <meta charset="utf-8">
-	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	    <meta name="description" content="">
-	    <meta name="author" content="">
+	<table style="width:80%">
+	<tr>
+		<th>Riff</th>
+		<th>Last Updated</th>
+		<th>Key</th>
+		<th>Time Signature</th>
+		<th>Tags</th>
+		<th>Audio Included?</th>
+		<th>Notation Included?</th>
+	</tr>
+	{% for riff in riffs %}
+		<tr>
+			<td><a href="{% url 'riff_detail' pk=riff.pk %}">{{ riff.name }}</a></td>
+			<td>Yesterday</td>
+			<td>{{ riff.riff_key }}</td>
+			<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
+			<td>Sweaty, slimy</td>
+			<td>No!</td>
+			<td>No!</td>
+		</tr>
+	{% endfor %}
+	</table>
 
-	    <title>Collection</title>
-
-		<link rel="stylesheet" href="{% static 'css/index.css' %}">
-
-	    <!-- Bootstrap core CSS -->
-	    <link href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-	    <!-- Custom styles for this template -->
-	    <link href="../../static/css/logo-nav.css" rel="stylesheet">
-
-	</head>
-	<body>
-
-		{% block content %}
-			<h1>Collection</h1>
-
-			<table style="width:80%">
-			<tr>
-				<th>Riff</th>
-				<th>Last Updated</th>
-				<th>Key</th>
-				<th>Time Signature</th>
-				<th>Tags</th>
-				<th>Audio Included?</th>
-				<th>Notation Included?</th>
-			</tr>
-			{% for riff in riffs %}
-				<tr>
-					<td>{{ riff.name }}</td>
-					<td>Yesterday</td>
-					<td>{{ riff.riff_key }}</td>
-					<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
-					<td>Sweaty, slimy</td>
-					<td>No!</td>
-					<td>No!</td>
-				</tr>
-			{% endfor %}
-			</table>
-
-			<a href="newriff">Add Riff</a>
-		{% endblock %}
-
-	</body>
-</html>
+	<a href="newriff">Add Riff</a>
+{% endblock %}

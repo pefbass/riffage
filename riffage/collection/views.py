@@ -28,3 +28,7 @@ def new_riff(request):
 		form = NewRiffForm()
 	
 	return render(request, 'collection/new_riff.html', {'form': form})
+
+def riff_detail(request, pk):
+	riff = get_object_or_404(Riff, pk=pk)
+	return render(request, 'collection/riff_detail.html', {'riff': riff})

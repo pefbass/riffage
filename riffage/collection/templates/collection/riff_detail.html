@@ -1,17 +1,11 @@
 {% extends 'base.html' %}
-<html>
-	<head>
+{% block content %}
 
-	<title>{{ riff.name }}</title> <!-- Attempting to title the page the riff that was just created. -->
+	<div class="riff">
+		<h2><bold>{{ riff.name }}</bold></h2> <!-- THIS BREAKS THE NAVBAR CSS FOR SOME REASON. -->
+		
+		<a href="/collection">Return to Collection</a>
 
-	</head>
-	
-	<body>
-		{% block content %}
-			<h2>Riff submitted successfully!</h2>
+	</div>
 
-			<a href="/collection">Return to Collection</a>
-		{% endblock %}
-
-	</body>
-</html>
+{% endblock %}
