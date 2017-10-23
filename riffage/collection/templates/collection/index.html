@@ -1,14 +1,31 @@
+{% extends 'base.html' %}
+
 {% load staticfiles %}
 <html>
 	<head>
-		<title>Collection</title>
+
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+
+	    <title>Collection</title>
+
 		<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+	    <!-- Bootstrap core CSS -->
+	    <link href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	    <!-- Custom styles for this template -->
+	    <link href="../../static/css/logo-nav.css" rel="stylesheet">
+
 	</head>
 	<body>
-		<h1>Collection</h1>
 
 		{% block content %}
-			<table style="width:100%">
+			<h1>Collection</h1>
+
+			<table style="width:80%">
 			<tr>
 				<th>Riff</th>
 				<th>Last Updated</th>
@@ -32,7 +49,7 @@
 			</table>
 
 			<a href="newriff">Add Riff</a>
-
 		{% endblock %}
+
 	</body>
 </html>

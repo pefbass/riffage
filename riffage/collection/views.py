@@ -22,7 +22,7 @@ def new_riff(request):
 
 			riff.save()
 
-			return render(request, 'collection/submit_success.html')
+			return render(request, 'collection/riff_detail.html')
 
 	else:
 		form = NewRiffForm()

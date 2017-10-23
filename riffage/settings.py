@@ -57,7 +57,8 @@ ROOT_URLCONF = 'riffage.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'riffage/templates/base.html'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
