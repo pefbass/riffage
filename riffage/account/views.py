@@ -3,9 +3,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import auth
 
-def index(request):
-    return render(request, 'index.html')
+def account(request):
+    if request.user.is_authenticated():
+        return render(request, 'account.html')
+    else:
+        return redirect('/')
 
 def create(request):
     if request.method == 'POST':
@@ -16,7 +20,11 @@ def create(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('accounts')
+            return redirect('account')
     else:
         form = UserCreationForm()
     return render(request, 'create.html', {'form': form})
+
+def logout(request):
+    auth.logout(request)
+    return redirect('/')

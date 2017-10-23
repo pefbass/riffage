@@ -57,8 +57,7 @@ ROOT_URLCONF = 'riffage.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            'riffage/templates/base.html'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,4 +123,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Login Redirect
-LOGIN_REDIRECT_URL = '/accounts'
+LOGIN_REDIRECT_URL = '/account'
