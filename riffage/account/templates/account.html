@@ -36,6 +36,9 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
+              <a class="nav-link" href="/collection">home</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="logout">logout</a>
             </li>
           </ul>
@@ -45,8 +48,30 @@
 
     <!-- Page Content -->
     <div class="container">
-      <h1 class="mt-5">Welcome {{ user }}</h1>
+      <h4 class="mt-5" style="padding-bottom: 2em">Account Settings</h4>
+      <p style="">Username: {{ user }}</p>
+      <p style="display: inline; margin-right: 2em">Email: {{ user }}</p>
+      <button type="button" class="btn-sm btn-info" style="display: inline;">Reset Email</button>
+      <div class="col-md-10" style="margin-top: 3em">
+
+        <div class="form-group">
+          <label for=""><span style="font-weight: bold">About me: </span> 
+            Instruments you play, influences, how much you tend to write, etc</label>
+          <textarea class="form-control" rows="5" id="bio"></textarea>
+        </div>
+
+        <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description" style="font-weight: bold">Private Account?</span>
+          <p style="display: inline; margin-left: 3em">Private accounts cannot be viewed by other users and all riffs will be set to "private"</p>
+        </label>
+      </div>
+      <button type="button" class="btn btn-primary" style="display: inline; float: right">Save</button>
+      <button type="button" class="btn btn-info" style="display: inline; float: right; margin-right: 3em">Reset Email</button>
     </div>
+   
+
     <!-- /.container -->
 
     <!-- Bootstrap core JavaScript -->

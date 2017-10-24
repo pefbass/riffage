@@ -123,4 +123,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Login Redirect
-LOGIN_REDIRECT_URL = '/account'
+LOGIN_REDIRECT_URL = '/collection'
