@@ -20,7 +20,7 @@ def create(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('account')
+            return redirect('/collection')
     else:
         form = UserCreationForm()
     return render(request, 'create.html', {'form': form})
@@ -28,3 +28,6 @@ def create(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+def collections(request):
+    return redirect('/collection')
