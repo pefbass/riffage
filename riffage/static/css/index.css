@@ -1,3 +1,12 @@
-table, th, td {
+.collection {
 	border: 1px solid black;
+}
+
+.riff_detail {
+	border: 0px;
+}
+
+.tablature {
+	font-family: Courier New, monospace;
+	line-height: 2px;
 }
