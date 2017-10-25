@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<h1>Collection</h1>
 
-	<table class="collection" style="width:80%">
+<div align="center">
+	<table class="collection_header>" style="width:80%">
+		<tr>
+			<td><h1>Collection</h1></td>
+			<td>
+				<form action="newriff" align="right">
+					<input type="submit" value="Add Riff" />
+				</form>
+			</td>
+		</tr>
+	</table>
+
+	<br>
+
+	<input type="text" id="myInput" onkeyup="search_riffs()" placeholder="Shreddicus McRiffalicious" title="Search" style="width:80%">
+	<table class="collection" id="myTable" style="width:80%">
 		<tr>
 			<th>Riff</th>
 			<th>Last Updated</th>
@@ -25,5 +39,34 @@
 			</tr>
 		{% endfor %}
 	</table>
-	<a href="newriff">Add Riff</a>
+</div>
+
+	<script>
+	function search_riffs() {
+		var input, filter, table, tr, td, i;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("myTable");
+		tr = table.getElementsByTagName("tr");
+
+		for (i = 0; i < tr.length; i++) {
+
+			td = tr[i].getElementsByTagName("td")[0];
+
+			if (td) {
+
+				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+
+					tr[i].style.display = "";
+
+				} else {
+
+					tr[i].style.display = "none";
+
+				}
+			}       
+		}
+	}
+	</script>
+
 {% endblock %}
