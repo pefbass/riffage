@@ -1,40 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
+	<br><br>
+	<h2><bold>{{ riff.name }}</bold></h2>
 
-	<div class="riff">
-		<h2><bold>{{ riff.name }}</bold></h2>
-		<table class="riff_detail">
-			<colgroup>
-				<col style="width:20%">
-				<col>
-			</colgroup>
-			<tr>
-				<th>Key:</th>
-				<td>{{ riff.riff_key }}</td>
-			</tr>
-			<tr>
-				<th>Time Signature:</th>
-				<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
-			</tr>
-			<tr>
-				<th>Description:</th>
-				<td>This a description of {{ riff.name }} so if I were to say anything about it, I would say it's really good.</td>
-			</tr>
-			<tr>
-				<th>Tablature:</th>
-				<td></td>
-			</tr>
-		</table>
+	<table class="riff_detail">
+		<colgroup>
+			<col style="width:20%">
+			<col>
+		</colgroup>
+		<tr>
+			<th>Key:</th>
+			<td>{{ riff.riff_key }}</td>
+		</tr>
+		<tr>
+			<th>Time Signature:</th>
+			<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
+		</tr>
+		<tr>
+			<th>Description:</th>
+			<td>This a description of {{ riff.name }} so if I were to say anything about it, I would say it's really good.</td>
+		</tr>
+		<tr>
+			<th>Tablature:</th>
+			<td></td>
+		</tr>
+	</table>
 
-		<div class="tablature">
-			G |-----------------|<br>
-			D |-----------------|<br>
-			A |-----------------|<br>
-			E |-0-0-0-0-5-0-3-0-|<br>
-		</div>
-
-		<a href="/collection">Return to Collection</a>
-
+	<div class="tablature">
+		G |-----------------|<br>
+		D |-----------------|<br>
+		A |-----------------|<br>
+		E |-0-0-0-0-5-0-3-0-|<br>
 	</div>
+
+	<a href="/collection">Return to Collection</a>
 
 {% endblock %}

@@ -5,5 +5,5 @@ from . import views
 urlpatterns = [
 	url(r'^$', index),
 	url(r'^newriff', new_riff),
-	url(r'^riff/(?P<pk>\d+)/$', views.riff_detail, name='riff_detail'),
+	url(r'^riff/(?P<pk>\d+)/$', riff_detail, name='riff_detail'),
 ]
