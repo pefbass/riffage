@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import auth
-from forms import SignUpForm
+from .forms import SignUpForm
 
 def account(request):
     if request.user.is_authenticated():
