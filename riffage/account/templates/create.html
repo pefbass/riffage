@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Logo Nav - Start Bootstrap Template</title>
+    <title>RIFFAGE</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -53,22 +53,37 @@
 
     <!-- Page Content -->
     <div class="container">
-        <div class="lgn-container col-lg-6" style="margin: 0 auto; margin-top: 5em">
+        <div class="lgn-container col-lg-6" style="margin: 0 auto; margin-top: 4.85em">
         {% block content %}
-        <h2>Sign up</h2>
+        <h2 style="margin-bottom: 1em">Sign up</h2>
         <form method="post">
             {% csrf_token %}
-            {% for field in form %}
-            <p>
-                {{ field.label_tag }}<br>
-                {{ field }}
+           <p> {{ field.label_tag }} </p>
+                <!-- {{ field }} -->
+                <table class="table">
+                  <tr>
+                      <td><label id="username" for="username" >Username</label></td>
+                      <td>{{form.username}}</td>
+                  </tr>
+                  <tr>
+                      <td><label id="password1"  >Password</label></td>
+                      <td>{{form.password1}}</td> 
+                  </tr>
+                  <tr>
+                    <td><label id="password2" >Password</label></td>
+                    <td type="password">{{form.password2}}</td>
+                 </tr>
+                 <tr>
+                  <td><label id="email">Email</label></td>
+                  <td>{{form.email}}</td>
+               </tr>
+              </table>
                 {% for error in field.errors %}
                 <p style="color: red">{{ error }}</p>
                 {% endfor %}
-            </p>
-            {% endfor %}
             
-            <button type="submit">Sign up</button>
+            
+                <button type="submit" class="btn btn-primary">Create</button>
         </form>
         {% endblock %}
         </div>

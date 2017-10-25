@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import auth
+from forms import SignUpForm
 
 def account(request):
     if request.user.is_authenticated():
@@ -13,16 +14,16 @@ def account(request):
 
 def create(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('/collection')
+            return redirect('/collection', {'user': user})
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, 'create.html', {'form': form})
 
 def logout(request):

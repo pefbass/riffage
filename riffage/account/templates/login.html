@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Logo Nav - Start Bootstrap Template</title>
+    <title>RIFFAGE</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -54,20 +54,21 @@
     <!-- Page Content -->
     <div class="container">
       <div id="content-container" class="container p-none">
-        <div class="lgn-container col-lg-6" style="margin: 0 auto; margin-top: 10em">
+        <div class="lgn-container col-lg-6" style="margin: 0 auto; margin-top: 5.5em">
             <form id="login-form" method="post" 
                   action="">
                 {% csrf_token %}
+                <h2 style="margin-bottom: 1em">Sign in</h2>
                 <table class="table">
                     <tr>
                         <td><label for="id_username">Username</label></td>
                         <td><input id="id_username" name="username" 
-                                   type="text" class="form-control"></td>
+                                   type="text"></td>
                     </tr>
                     <tr>
                         <td><label for="id_password">Password</label></td>
                         <td><input id="id_password" name="password" 
-                                   type="password" class="form-control"></td>
+                                   type="password"></td>
                     </tr>
                 </table>
                 {% if form.errors %}
@@ -77,8 +78,7 @@
                     </p>
                 {% endif %}
 
-                <input type="submit" value="Login" 
-                       class="btn btn-primary pull-right" />
+                <button type="submit" class="btn btn-primary">Sign in</button>
                 <input type="hidden" name="next" value="{{ next }}" />
             </form>
         </div>
