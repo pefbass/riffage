@@ -1,7 +1,7 @@
 from django.http import *
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from .forms import NewRiffForm
+from .forms import RiffForm
 from .models import Riff
 
 def index(request):
@@ -11,7 +11,7 @@ def index(request):
 
 def new_riff(request):
 	if request.method == 'POST':
-		form = NewRiffForm(request.POST)
+		form = RiffForm(request.POST)
 
 		if form.is_valid():
 			riff = Riff()
@@ -22,10 +22,10 @@ def new_riff(request):
 
 			riff.save()
 
-			return render(request, 'collection/riff_detail.html')
+			return render(request, 'collection/riff_detail.html', {'riff': riff})
 
 	else:
-		form = NewRiffForm()
+		form = RiffForm()
 	
 	return render(request, 'collection/new_riff.html', {'form': form})
 
