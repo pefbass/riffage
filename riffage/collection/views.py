@@ -26,9 +26,21 @@ def new_riff(request):
 
 	else:
 		form = RiffForm()
-	
+
 	return render(request, 'collection/new_riff.html', {'form': form})
 
 def riff_detail(request, pk):
 	riff = get_object_or_404(Riff, pk=pk)
 	return render(request, 'collection/riff_detail.html', {'riff': riff})
+
+def riff_edit(request, pk):
+    riff = get_object_or_404(Riff, pk=pk)
+    if request.method == "POST":
+        form = RiffForm(request.POST, instance=riff)
+        if form.is_valid():
+            riff = form.save(commit=False)
+            riff.save()
+            return redirect('riff_detail', pk=riff.pk)
+    else:
+        form = RiffForm(instance=riff)
+    return render(request, 'collection/riff_edit.html', {'form': form})

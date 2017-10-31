@@ -21,5 +21,7 @@ urlpatterns = [
     url(r'^$', views.index, name="index"),
     url(r'^admin/', admin.site.urls),
     url(r'^collection/', include('riffage.collection.urls')),
-    url(r'^account/', include('riffage.account.urls'))
+    url(r'^account/', include('riffage.account.urls')),
+
 ]
+
