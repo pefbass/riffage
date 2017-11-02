@@ -5,14 +5,14 @@ from .forms import RiffForm
 from .models import Riff
 from django.contrib import auth
 
-def index(request):
+def collection(request):
 	riffs = Riff.objects.all()
 	params = {}
 	params['category'] = 'collections'
-	return render(request, 'collection/index.html',
+	return render(request, 'collection/collection.html',
 		{ 'riffs' : riffs, 'params': params})
 
-def new_riff(request):
+def riff_new(request):
 	if request.method == 'POST':
 		form = RiffForm(request.POST)
 
@@ -30,7 +30,7 @@ def new_riff(request):
 	else:
 		form = RiffForm()
 
-	return render(request, 'collection/new_riff.html', {'form': form})
+	return render(request, 'collection/riff_new.html', {'form': form})
 
 def riff_detail(request, pk):
 	riff = get_object_or_404(Riff, pk=pk)
