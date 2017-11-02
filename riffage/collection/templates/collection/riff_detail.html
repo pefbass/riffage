@@ -18,11 +18,19 @@
 		</tr>
 		<tr>
 			<th>Description:</th>
-			<td>This a description of {{ riff.name }} so if I were to say anything about it, I would say it's really good.</td>
+			<td>{{ riff.desc }}</td>
 		</tr>
 		<tr>
 			<th>Tablature:</th>
-			<td></td>
+			<td>			
+				<div class="tablature">
+					<pre>{{ riff.tab }}</pre>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>Tags:</th>
+			<td>{{ riff.tags }}</td>
 		</tr>
 	</table>
 

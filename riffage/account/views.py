@@ -7,8 +7,10 @@ from django.contrib import auth
 from .forms import SignUpForm
 
 def account(request):
+    params = {}
+    params['category'] = 'account'
     if request.user.is_authenticated():
-        return render(request, 'account.html')
+        return render(request, 'account.html', {'params': params})
     else:
         return redirect('/')
 

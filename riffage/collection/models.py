@@ -1,7 +1,7 @@
 from django.db import models
 
 class Riff(models.Model):
-	name = models.CharField(max_length=100)
+	name = models.CharField(max_length=20)
 
 	KEY_CHOICES = [
 		('', 'Select'),
@@ -51,3 +51,9 @@ class Riff(models.Model):
 	timesig_denom = models.IntegerField(choices=TIMESIG_DENOM_CHOICES, default=4)
 
 	audio_file = models.FileField(upload_to='riffs/', blank=True, null=True)
+	
+	desc = models.TextField(max_length=200, default='')
+
+	tab = models.TextField(max_length=1000, default='G |----|\nD |----|\nA |----|\nE |----|\n')
+
+	tags = models.CharField(max_length=50, default='')
