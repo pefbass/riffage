@@ -32,7 +32,7 @@
 				<td>{{ riff.riff_key }}</td>
 				<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
 				<td>{{ riff.tags }}</td>
-				<td>No!</td>
+				<td>{{ riff.audio_file|yesno:"Yes!,No!" }}</td>
 				<td>No!</td>
 			</tr>
 		{% endfor %}
