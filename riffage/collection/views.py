@@ -1,6 +1,5 @@
 from django.http import *
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from .forms import RiffForm
 from .models import Riff
 
@@ -11,7 +10,7 @@ def index(request):
 
 def new_riff(request):
 	if request.method == 'POST':
-		form = RiffForm(request.POST)
+		form = RiffForm(request.POST, request.FILES)
 
 		if form.is_valid():
 			riff = Riff()

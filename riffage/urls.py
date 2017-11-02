@@ -14,6 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.views.static import serve
+from django.conf import settings
 from django.contrib import admin
 from . import views
 
@@ -22,6 +24,11 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^collection/', include('riffage.collection.urls')),
     url(r'^account/', include('riffage.account.urls')),
-
 ]
 
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    ]

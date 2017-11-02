@@ -33,6 +33,14 @@
 		E |-0-0-0-0-5-0-3-0-|<br>
 	</div>
 
+	<div>
+		{% if riff.audio_file %}
+			<audio controls>
+				<source src="{{ riff.audio_file.url }}">
+			</audio>
+		{% endif %}
+	</div>
+
 
 	<a href="{% url 'riff_edit' pk=riff.pk %}">
 		<button type="button" class="btn btn-default">

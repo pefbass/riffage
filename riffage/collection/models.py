@@ -49,3 +49,5 @@ class Riff(models.Model):
 	]
 
 	timesig_denom = models.IntegerField(choices=TIMESIG_DENOM_CHOICES, default=4)
+
+	audio_file = models.FileField(upload_to='riffs/', blank=True, null=True)
