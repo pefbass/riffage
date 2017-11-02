@@ -1,13 +1,16 @@
 from django.http import *
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from .forms import RiffForm
 from .models import Riff
+from django.contrib import auth
 
 def index(request):
 	riffs = Riff.objects.all()
+	params = {}
+	params['category'] = 'collections'
 	return render(request, 'collection/index.html',
-		{ 'riffs' : riffs })
+		{ 'riffs' : riffs, 'params': params})
 
 def new_riff(request):
 	if request.method == 'POST':
@@ -44,3 +47,7 @@ def riff_edit(request, pk):
     else:
         form = RiffForm(instance=riff)
     return render(request, 'collection/riff_edit.html', {'form': form})
+
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
