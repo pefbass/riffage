@@ -35,19 +35,17 @@
 					</button>
 					<div class="collapse navbar-collapse" id="navbarResponsive">
 						<ul class="navbar-nav ml-auto">
-							<li class="nav-item active">
+							<li {% if params.category == "collections" %} class="nav-item active"{%else%}
+							     class="nav-item" {% endif %}>
 								<a class="nav-link" href="/collection">Collection
-									<span class="sr-only">(current)</span>
+									<!-- <span class="sr-only">(current)</span> -->
 								</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">About</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Services</a>
-							</li>
-							<li class="nav-item">
+							<li {% if params.category == "account" %} class="nav-item active"{%else%}
+							class="nav-item" {% endif %}>
 								<a class="nav-link" href="/account">Settings</a>
+							</li>
+								<a class="nav-link" href="logout">logout</a>
 							</li>
 						</ul>
 					</div>
