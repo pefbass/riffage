@@ -1,5 +1,6 @@
 from django.http import *
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from .forms import RiffForm
 from .models import Riff
 from django.contrib import auth
@@ -49,4 +50,9 @@ def riff_edit(request, pk):
 
 def logout(request):
     auth.logout(request)
-    return redirect('/')
+    return redirect(reverse('index'))
+
+def delete_riff(request, pk):
+	riff = get_object_or_404(Riff, pk=pk)
+	riff.delete()
+	return redirect(reverse('collection'))
