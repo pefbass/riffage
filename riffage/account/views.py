@@ -15,6 +15,8 @@ def account(request):
         return redirect('/')
 
 def create(request):
+    params = {}
+    params['category'] = 'create'
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -26,7 +28,7 @@ def create(request):
             return redirect('/collection', {'user': user})
     else:
         form = SignUpForm()
-    return render(request, 'create.html', {'form': form})
+    return render(request, 'create.html', {'form': form, 'params':params})
 
 def logout(request):
     auth.logout(request)
