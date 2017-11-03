@@ -28,3 +28,11 @@ class RiffForm(ModelForm):
 			raise ValidationError('Riff names must be unique')
 
 		return name
+
+	def clean_audio_file(self):
+		file_name = self.cleaned_data.get('audio_file').name
+
+		extensions = ['.wav', '.mp3']
+
+		if not any(file_name.endswith(ext) for ext in extensions):
+			raise ValidationError('Invalid file extension: type must be one of ' + ', '.join(extensions))
