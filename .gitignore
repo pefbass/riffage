@@ -1,3 +1,4 @@
 db.sqlite3
 *.pyc
-media
+_static_root
+_media_root
