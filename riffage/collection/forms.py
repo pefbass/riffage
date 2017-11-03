@@ -7,12 +7,19 @@ class RiffForm(ModelForm):
 		fields = ['name', 'riff_key', 'timesig_num', 'timesig_denom', 'desc', 'tab', 'tags', 'audio_file']
 
 	def clean(self):
+		# get cleaned data
 		data = super(RiffForm, self).clean()
 
-		tab = data.get('tab')
+		# get tab data from cleaned data, convert from unicode string and remove CR
+		tab = str(data.get('tab')).replace('\r', '')
+		# get audio data
 		audio = data.get('audio')
 
-		if not audio and (not tab or tab == u'G |----|\r\nD |----|\r\nA |----|\r\nE |----|'):
+		# get default value for tab field and remove newlines from the end
+		default_tab = Riff._meta.get_field('tab').get_default().strip('\n')
+
+		# if audio doesn't exist and tab doesn't exist or is the default value
+		if not audio and (not tab or tab == default_tab):
 			raise ValidationError('Must provide either a tab or an audio file')
 
 	def clean_name(self):
