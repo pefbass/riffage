@@ -2,12 +2,12 @@
 {% block content %}
 
     <!-- Page Content -->
-    <div class="container" style="border-radius: 5%; background-color: #EEEEEE; padding: 2em; margin-top: 2em; margin-bottom: 3em">
-      <div class=row>
+    <div class="container" style="border-radius: 5%; background-color: #EEEEEE; padding: 2em; margin-top: 4em; margin-bottom: 3em">
+      <div class="row">
         <div class="col-lg-8">
           <h4 class="mt-5" style="padding-bottom: 2em">Account Settings</h4>
           <p style="">Username: {{ user }}</p>
-          <p style="display: inline; margin-right: 2em">Email: {{ user }}</p>
+          <p style="display: inline; margin-right: 2em">Email: {{ user.email }}</p>
           <button type="button" class="btn-sm btn-info" style="display: inline;">Reset Email</button>
         </div>
         <div class="col-md-10" style="margin-top: 3em">

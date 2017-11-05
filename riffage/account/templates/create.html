@@ -29,9 +29,9 @@
                         <td>{{form.email}}</td>
                     </tr>
                     </table>
-                        {% for error in field.errors %}
-                        <p style="color: red">{{ error }}</p>
-                        {% endfor %}
+                    {% for error in field.errors %}
+                         <p style="color: red">{{ error }}</p>
+                    {% endfor %}
                     
                     
                         <button type="submit" class="btn btn-primary">Create</button>
