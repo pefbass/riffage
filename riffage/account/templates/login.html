@@ -13,18 +13,18 @@
                         <h2 style="margin-bottom: 1em">Sign in</h2>
                         <table class="table">
                             <tr>
-                                <td><label for="id_username">Username</label></td>
+                                <td><label for="id_username">Username:</label></td>
                                 <td><input id="id_username" name="username" 
                                         type="text"></td>
                             </tr>
                             <tr>
-                                <td><label for="id_password">Password</label></td>
+                                <td><label for="id_password">Password:</label></td>
                                 <td><input id="password1" name="password" 
                                         type="password"></td>
                             </tr>
                         </table>
                         {% if form.errors %}
-                            <p class=" label label-danger">
+                            <p class=" label label-danger" style="color: red">
                                 Your username and password didn't match. 
                                 Please try again.
                             </p>
