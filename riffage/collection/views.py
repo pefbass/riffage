@@ -38,7 +38,7 @@ def riff_edit(request, pk):
 	params['category'] = 'collections'
 	riff = get_object_or_404(Riff, pk=pk)
 	if request.method == "POST":
-		form = RiffForm(request.POST, instance=riff, edit=True)
+		form = RiffForm(request.POST, request.FILES, instance=riff, edit=True)
 		if form.is_valid():
 			riff = form.save()
 			return redirect('riff_detail', riff.pk)
