@@ -5,7 +5,8 @@ from django.db import models
 
 # Create your models here.
 class Account(models.Model):
-    username = models.CharField(max_length=100)
+    bio = models.CharField(max_length=2000, default="TEST")
+    account_public = models.BooleanField(default=True)
 
 def publish(self):
     self.save()

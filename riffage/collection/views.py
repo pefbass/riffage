@@ -37,7 +37,7 @@ def riff_detail(request, pk):
 	params = {}
 	params['category'] = 'collections'
 	riff = get_object_or_404(Riff, pk=pk)
-	return render(request, 'collection/riff_detail.html', {'riff': riff})
+	return render(request, 'collection/riff_detail.html', {'riff': riff, 'params': params})
 
 def riff_edit(request, pk):
 	params = {}
