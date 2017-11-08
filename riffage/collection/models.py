@@ -3,6 +3,10 @@ from django.db import models
 class Riff(models.Model):
 	name = models.CharField(max_length=20)
 
+	# This is the check-box for Private Visibility.
+	# We default all riffs as Private (unchecked).
+	priv_vis = models.BooleanField(default=True)
+
 	KEY_CHOICES = [
 		('', 'Select'),
 
@@ -52,7 +56,7 @@ class Riff(models.Model):
 
 	audio_file = models.FileField(upload_to='riffs/', blank=True, null=True)
 	
-	desc = models.TextField(max_length=200, default='')
+	desc = models.TextField(max_length=200, default='', blank=True)
 
 	tab = models.TextField(max_length=1000, default='G |----|\nD |----|\nA |----|\nE |----|\n')
 
