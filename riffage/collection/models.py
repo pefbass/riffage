@@ -1,3 +1,4 @@
+from os.path import basename
 from django.db import models
 
 class Riff(models.Model):
@@ -54,10 +55,15 @@ class Riff(models.Model):
 
 	timesig_denom = models.IntegerField(choices=TIMESIG_DENOM_CHOICES, default=4)
 
-	audio_file = models.FileField(upload_to='riffs/', blank=True, null=True)
+	audio_file = models.FileField(upload_to='riff_audio/', blank=True, null=True)
 	
 	desc = models.TextField(max_length=200, default='', blank=True)
 
 	tab = models.TextField(max_length=1000, default='G |----|\nD |----|\nA |----|\nE |----|\n')
 
 	tags = models.CharField(max_length=50, default='')
+
+	document = models.FileField(upload_to='riff_documents/', blank=True, null=True)
+
+	def document_filename(self):
+		return basename(self.document.name) if self.document else ''

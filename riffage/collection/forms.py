@@ -1,10 +1,11 @@
 from django.forms import ModelForm, ValidationError
+from os.path import splitext
 from .models import Riff
 
 class RiffForm(ModelForm):
 	class Meta:
 		model = Riff
-		fields = ['name', 'priv_vis', 'riff_key', 'timesig_num', 'timesig_denom', 'desc', 'tab', 'tags', 'audio_file']
+		fields = ['name', 'priv_vis', 'riff_key', 'timesig_num', 'timesig_denom', 'desc', 'tab', 'tags', 'audio_file', 'document']
 
 	def clean(self):
 		# get cleaned data
@@ -34,12 +35,12 @@ class RiffForm(ModelForm):
 
 		if not audio_file:
 			return audio_file
-		
-		file_name = audio_file.name
 
-		extensions = ['.wav', '.mp3']
+		_, file_extension = splitext(audio_file.name)
 
-		if not any(file_name.endswith(ext) for ext in extensions):
+		valid_extensions = ['.wav', '.mp3']
+
+		if not file_extension in valid_extensions:
 			raise ValidationError('Invalid file extension: type must be one of ' + ', '.join(extensions))
 
 		return audio_file

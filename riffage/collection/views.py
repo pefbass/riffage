@@ -1,6 +1,5 @@
 from django.http import *
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
 from .forms import RiffForm
 from .models import Riff
 from django.contrib import auth
@@ -27,7 +26,7 @@ def riff_new(request):
 
 			riff.save()
 
-			return render(request, 'collection/riff_detail.html', {'riff': riff})
+			return redirect('riff_detail', riff.pk)
 
 	else:
 		form = RiffForm()
@@ -38,7 +37,7 @@ def riff_detail(request, pk):
 	params = {}
 	params['category'] = 'collections'
 	riff = get_object_or_404(Riff, pk=pk)
-	return render(request, 'collection/riff_detail.html', {'riff': riff})
+	return render(request, 'collection/riff_detail.html', {'riff': riff, 'params': params})
 
 def riff_edit(request, pk):
 	params = {}
@@ -49,16 +48,16 @@ def riff_edit(request, pk):
 		if form.is_valid():
 			riff = form.save(commit=False)
 			riff.save()
-			return redirect(reverse('riff_detail'), pk=riff.pk)
+			return redirect('riff_detail', riff.pk)
 	else:
 		form = RiffForm(instance=riff)
 	return render(request, 'collection/riff_edit.html', {'form': form, 'params' : params})
 
 def logout(request):
     auth.logout(request)
-    return redirect(reverse('index'))
+    return redirect('index')
 
 def delete_riff(request, pk):
 	riff = get_object_or_404(Riff, pk=pk)
 	riff.delete()
-	return redirect(reverse('collection'))
+	return redirect('collection')

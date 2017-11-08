@@ -44,6 +44,12 @@
 	</div>
 
 	<div>
+		{% if riff.document %}
+			<a href="{{ riff.document.url }}">{{ riff.document_filename }}</a>
+		{% endif %}
+	</div>
+
+	<div>
 		<button onclick="delete_riff()" class="btn btn-danger">Delete Riff</button>		
 	</div>
 
