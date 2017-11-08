@@ -17,6 +17,7 @@
 	<input type="text" id="myInput" onkeyup="search_riffs()" placeholder="Shreddicus McRiffalicious" title="Search" style="width:80%">
 	<table class="collection" id="myTable" style="width:80%">
 		<tr>
+			<!-- USERNAME COLUMN GOES HERE -->
 			<th>Riff</th>
 			<th>Last Updated</th>
 			<th>Key</th>
@@ -39,31 +40,31 @@
 	</table>
 </div>
 
-	<script>
+<script>
 
-		var search_riffs = (function() {
-			var input, filter, table, tr, td, i;
-			input = document.getElementById("myInput");
-			table = document.getElementById("myTable");
-			tr = table.getElementsByTagName("tr");
+	var search_riffs = (function() {
+		var input, filter, table, tr, td, i;
+		input = document.getElementById("myInput");
+		table = document.getElementById("myTable");
+		tr = table.getElementsByTagName("tr");
 
-			return function() {
-				filter = input.value.toUpperCase();
-				
-				for (i = 0; i < tr.length; i++) {
-					td = tr[i].getElementsByTagName("td")[0];
-		
-					if (td) {
-						if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-							tr[i].style.display = "";
-						} else {
-							tr[i].style.display = "none";
-						}
-					}       
-				}
+		return function() {
+			filter = input.value.toUpperCase();
+			
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+	
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}       
 			}
-		})();
+		}
+	})();
 
-	</script>
+</script>
 
 {% endblock %}

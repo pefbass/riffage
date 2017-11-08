@@ -5,7 +5,7 @@ from .models import Riff
 class RiffForm(ModelForm):
 	class Meta:
 		model = Riff
-		fields = ['name', 'riff_key', 'timesig_num', 'timesig_denom', 'desc', 'tab', 'tags', 'audio_file', 'document']
+		fields = ['name', 'priv_vis', 'riff_key', 'timesig_num', 'timesig_denom', 'desc', 'tab', 'tags', 'audio_file', 'document']
 	
 	def __init__(self, *args, **kwargs):
 		# set edit=True if this form is editing a riff model rather than creating one
