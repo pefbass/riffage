@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-	
-	<h1>Edit Information </h1>
-	<form method="post" enctype="multipart/form-data">
-		{% csrf_token %}
-		{{form.as_p}}
-	<button type="submit" class="btn btn-success" value="Save">Save</button>
-	<a href="/collection">Return to Collection</a>
+
+<h1>Edit Riff</h1>
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<button type="submit" class="btn btn-success">Save</button>
+</form>
+<a href="{% url collection }">Return to Collection</a>
+
 {% endblock %}
