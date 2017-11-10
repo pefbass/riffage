@@ -5,7 +5,7 @@ class Riff(models.Model):
 	name = models.CharField(max_length=20)
 
 	# This is the check-box for Private Visibility.
-	# We default all riffs as Private (unchecked).
+	# We default all riffs as Private (checked).
 	priv_vis = models.BooleanField(default=True)
 
 	KEY_CHOICES = [
