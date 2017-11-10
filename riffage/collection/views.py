@@ -21,13 +21,7 @@ def riff_new(request):
 		form = RiffForm(request.POST, request.FILES)
 
 		if form.is_valid():
-			riff = Riff()
-			data = form.cleaned_data
-
-			for key in data:
-				setattr(riff, key, data[key])
-
-			riff.save()
+			riff = form.save()
 
 			return redirect('riff_detail', riff.pk)
 
@@ -47,13 +41,13 @@ def riff_edit(request, pk):
 	params['category'] = 'collections'
 	riff = get_object_or_404(Riff, pk=pk)
 	if request.method == "POST":
-		form = RiffForm(request.POST, instance=riff)
+		form = RiffForm(request.POST, request.FILES, instance=riff, edit=True)
 		if form.is_valid():
-			riff = form.save(commit=False)
-			riff.save()
+			riff = form.save()
 			return redirect('riff_detail', riff.pk)
 	else:
 		form = RiffForm(instance=riff)
+	
 	return render(request, 'collection/riff_edit.html', {'form': form, 'params' : params})
 
 def logout(request):

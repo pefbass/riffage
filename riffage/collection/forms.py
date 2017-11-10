@@ -6,6 +6,11 @@ class RiffForm(ModelForm):
 	class Meta:
 		model = Riff
 		fields = ['name', 'priv_vis', 'riff_key', 'timesig_num', 'timesig_denom', 'desc', 'tab', 'tags', 'audio_file', 'document']
+	
+	def __init__(self, *args, **kwargs):
+		# set edit=True if this form is editing a riff model rather than creating one
+		self.edit = kwargs.pop('edit', False)
+		super(RiffForm, self).__init__(*args, **kwargs)
 
 	def clean(self):
 		# get cleaned data
@@ -25,6 +30,11 @@ class RiffForm(ModelForm):
 
 	def clean_name(self):
 		name = self.cleaned_data.get('name')
+
+		# if this form is editing a riff model, don't check for duplicate name
+		if self.edit:
+			return name
+
 		if Riff.objects.filter(name=name).exists():
 			raise ValidationError('Riff names must be unique')
 
