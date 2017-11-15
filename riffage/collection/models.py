@@ -1,4 +1,4 @@
-from os.path import basename
+from os.path import basename, splitext
 from django.db import models
 
 class Riff(models.Model):
@@ -67,3 +67,14 @@ class Riff(models.Model):
 
 	def document_filename(self):
 		return basename(self.document.name) if self.document else ''
+
+	def document_is_image(self):
+		if not self.document:
+			return
+		
+		image_extensions = ['.png', '.jpeg', '.jpg', '.gif', '.svg', '.bmp']
+		_, document_extension = splitext(self.document.name)
+
+		print(document_extension)
+
+		return document_extension in image_extensions

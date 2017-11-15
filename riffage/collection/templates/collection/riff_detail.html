@@ -50,11 +50,15 @@
 		<tr>
 			<th>Riff Documentation:</th>
 			<td>
+				{% if riff.document_is_image %}
+				<img src="{{ riff.document.url }}">
+				{% else %}
 				<iframe src="{% static 'js/ViewerJS/index.html' %}#{{ riff.document.url }}"
 						width='400'
 						height='300'
 						allowfullscreen webkitallowfullscreen>
 				</iframe>
+				{% endif %}
 			</td>
 		</tr>
 		{% endif %}
