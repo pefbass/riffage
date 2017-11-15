@@ -4,6 +4,9 @@
     <!-- Page Content -->
     <div class="container" id="vue-div" style="border-radius: 5%; background-color: #EEEEEE; padding: 2em; margin-top: 4em; margin-bottom: 3em">
       <div class="row">
+        <div class="display: hidden">
+            <p id="bio">{{ user.profile.bio }}</p> 
+        </div>
         <div class="col-lg-8">
             {% csrf_token %}
           <h4 class="mt-5" style="padding-bottom: 2em">Account Settings</h4>
@@ -13,19 +16,21 @@
         </div>
         <div class="col-md-10" style="margin-top: 3em; margin-bottom: 3em">
           <div class="form-group" >
+            {% verbatim %}
             <div class="" v-if="isActive">
               <label for=""><span style="font-weight: bold">About me: </span> 
                 Instruments you play, influences, how much you tend to write, etc</label>
-                  <textarea class="form-control" rows="5" id="bio">{{ user.profile.bio }}</textarea>
+                  <textarea class="form-control" rows="5" id="user_bio">{{user_bio}}</textarea>
             </div>
             <div class="" v-if="!isActive">
                 <label for=""><span style="font-weight: bold">About me: </span> 
-                    <p id="user_bio">{{ user.profile.bio }}</p>
+                    <p id="user_bio">{{user_bio}}</p>
             </div>
             <div >
                 <i v-on:click="toggleTextArea" class="fa fa-pencil-square-o" 
                                   aria-hidden="true"  style="float: right"></i>
             </div>
+            {% endverbatim %}
           </div>
           
           <div class="col-md-12" style="margin-top: 4em">
@@ -65,12 +70,12 @@
             var self = {};
             
             self.toggleTextArea = function() {
+                var bio = document.getElementById('user_bio').value
                 self.vue.isActive = !self.vue.isActive;
+                if(bio != undefined) self.vue.user_bio = bio
             }
             
             self.saveUserInfo = function() {
-              self.vue.user_bio = document.getElementById('bio').value
-              console.log(self.vue.user_bio)
 
               $.ajax({
 
@@ -86,11 +91,11 @@
             }
             self.vue = new Vue({
                 el: "#vue-div",
-                delimiters: ['${', '}'],
+                //rdelimiters: ['$[', ']'],
                 //unsafeDelimiters: ['!{', '}'],
                 data: {
                    isActive: false,
-                   user_bio: ""
+                   user_bio: document.getElementById('bio').innerHTML
                 },
                 methods: {
                     toggleTextArea: self.toggleTextArea,
