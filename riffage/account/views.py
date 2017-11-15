@@ -44,7 +44,10 @@ def collections(request):
 @csrf_exempt
 def update_user_profile(request):
     bio = request.POST.get('user_bio')
+    private_account = request.POST.get('account_private')
+    privacy = True if (private_account == 'on') else False
     Profile.objects.update(bio=bio)
+    Profile.objects.update(private_account=privacy)
     params = {}
-    params['success'] = bio
+    params['success'] = privacy
     return JsonResponse(params)
