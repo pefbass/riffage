@@ -17,8 +17,7 @@
 	<input type="text" id="myInput" onkeyup="search_riffs()" placeholder="Shreddicus McRiffalicious" title="Search" style="width:80%">
 	<table class="collection" id="myTable" style="width:80%">
 		<tr>
-			<!-- USERNAME COLUMN GOES HERE -->
-			{% if not riff_author.private_account %}
+			{% if not user.private_account %}
 				<th>Author</th>
 			{% endif %}
 			<th>Riff</th>
@@ -31,8 +30,8 @@
 		</tr>
 		{% for riff in riffs %}
 			<tr>
-				{% if not riff_author.private_account %}
-					<td>{{ riff_author }}</td>
+				{% if not user.private_account %}
+					<td>{{ riff.author.user }}</td>
 				{% endif %}
 				<td><a href="{% url 'riff_detail' pk=riff.pk %}">{{ riff.name }}</a></td>
 				<td>Yesterday</td>

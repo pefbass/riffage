@@ -1,7 +1,6 @@
 from django.http import *
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import RiffForm
-from django.contrib.auth.models import User
 from .models import Riff
 from django.contrib import auth
 
@@ -11,8 +10,7 @@ def collection(request):
 	params['category'] = 'collections'
 	return render(request, 'collection/collection.html',
 		{ 'riffs' : riffs,
-		'params': params,
-		'riff_author' : User})
+		'params': params,})
 
 def riff_new(request):
 	params = {}
@@ -21,7 +19,10 @@ def riff_new(request):
 		form = RiffForm(request.POST, request.FILES)
 
 		if form.is_valid():
-			riff = form.save()
+			riff = form.save(commit=False)
+			riff.author = request.user.profile
+			print(riff.getAuthor)
+			riff.save()
 
 			return redirect('riff_detail', riff.pk)
 

@@ -1,5 +1,6 @@
 from os.path import basename, splitext
 from django.db import models
+from riffage.account.models import Profile
 
 class Riff(models.Model):
 	name = models.CharField(max_length=20)
@@ -7,6 +8,11 @@ class Riff(models.Model):
 	# This is the check-box for Private Visibility.
 	# We default all riffs as Private (checked).
 	priv_vis = models.BooleanField(default=True)
+
+	author = models.ForeignKey(
+			Profile,
+			on_delete=models.CASCADE,
+			null=True)
 
 	KEY_CHOICES = [
 		('', 'Select'),
@@ -78,3 +84,6 @@ class Riff(models.Model):
 		print(document_extension)
 
 		return document_extension in image_extensions
+
+	def getAuthor(self):
+		return self.author.username
