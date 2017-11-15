@@ -8,6 +8,7 @@ urlpatterns = [
      url(r'^login', auth_views.login,{'template_name': 'login.html'}, name='login'),
      url(r'^create', views.create, name='create'),
      url(r'^logout', views.logout, name='logout'),
+     url(r'^update_user_profile', views.update_user_profile, name='update_user_profile')
 
 
 ]

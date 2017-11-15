@@ -6,11 +6,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import auth
 from .forms import SignUpForm
 from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from riffage.account.models import Profile
 
 def account(request):
     params = {}
     params['category'] = 'account'
-   
     if request.user.is_authenticated():
         return render(request, 'account.html', {'params': params})
     else:
@@ -38,3 +40,11 @@ def logout(request):
 
 def collections(request):
     return redirect('/collection')
+
+@csrf_exempt
+def update_user_profile(request):
+    bio = request.POST.get('user_bio')
+    Profile.objects.update(bio=bio)
+    params = {}
+    params['success'] = bio
+    return JsonResponse(params)
