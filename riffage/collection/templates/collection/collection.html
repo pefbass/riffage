@@ -18,6 +18,9 @@
 	<table class="collection" id="myTable" style="width:80%">
 		<tr>
 			<!-- USERNAME COLUMN GOES HERE -->
+			{% if not riff_author.private_account %}
+				<th>Author</th>
+			{% endif %}
 			<th>Riff</th>
 			<th>Last Updated</th>
 			<th>Key</th>
@@ -28,6 +31,9 @@
 		</tr>
 		{% for riff in riffs %}
 			<tr>
+				{% if not riff_author.private_account %}
+					<td>{{ riff_author }}</td>
+				{% endif %}
 				<td><a href="{% url 'riff_detail' pk=riff.pk %}">{{ riff.name }}</a></td>
 				<td>Yesterday</td>
 				<td>{{ riff.riff_key }}</td>
