@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+
+{% load static %}
+
 {% block content %}
 
 	<h2><bold>{{ riff.name }}</bold></h2>
@@ -47,7 +50,11 @@
 		<tr>
 			<th>Riff Documentation:</th>
 			<td>
-				<a href="{{ riff.document.url }}">{{ riff.document_filename }}</a>
+				<iframe src="{% static 'js/ViewerJS/index.html' %}#{{ riff.document.url }}"
+						width='400'
+						height='300'
+						allowfullscreen webkitallowfullscreen>
+				</iframe>
 			</td>
 		</tr>
 		{% endif %}
