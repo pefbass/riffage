@@ -11,11 +11,11 @@
         </div>
         <div class="col-lg-8">
             {% csrf_token %}
-          <h4 class="mt-5" style="padding-bottom: 2em">Account Settings</h4>
-          <p style="">Username: {{ user }}</p>
+          <h4 class="" style="padding-bottom: 2em">Account Settings</h4>
+          <p><span style="font-weight: bold">Username:</span> {{ user }}</p>
           {% verbatim %}
            
-          <p style="display: inline">Email: </p>
+          <p style="display: inline; font-weight: bold">Email: </p>
           <div v-if="!isActiveEmail" style="display:inline">
             <p id="emailField" style="display: inline; margin-right: 2em">{{ email }}</p>
           </div>
