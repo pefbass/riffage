@@ -42,12 +42,26 @@ def collections(request):
     return redirect('/collection')
 
 @csrf_exempt
-def update_user_profile(request):
+def update_user_bio(request):
+    params = {}
     bio = request.POST.get('user_bio')
+    Profile.objects.update(bio=bio)
+    params['success'] = "True"
+    return JsonResponse(params)
+
+@csrf_exempt
+def update_user_email(request):
+    params = {}
+    email = request.POST.get('user_email')
+    User.objects.update(email=email)
+    params['success'] = "True"
+    return JsonResponse(params)
+
+@csrf_exempt
+def update_user_account_privacy(request):
+    params = {}
     private_account = request.POST.get('account_private')
     privacy = True if (private_account == 'on') else False
-    Profile.objects.update(bio=bio)
     Profile.objects.update(private_account=privacy)
-    params = {}
-    params['success'] = privacy
+    params['success'] = "True"
     return JsonResponse(params)

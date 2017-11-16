@@ -7,19 +7,31 @@
         <div style="display: none">
             <p id="bio">{{ user.profile.bio }}</p>
             <p id="private_account">{{user.profile.private_account}}</p>
+            <p id="user_email">{{user.email}}</p>
         </div>
         <div class="col-lg-8">
             {% csrf_token %}
           <h4 class="mt-5" style="padding-bottom: 2em">Account Settings</h4>
           <p style="">Username: {{ user }}</p>
-          <p style="display: inline; margin-right: 2em">Email: {{ user.email }}</p>
-          <button type="button" class="btn-sm btn-info" style="display: inline;">Change Email</button>
+          {% verbatim %}
+           
+          <p style="display: inline">Email: </p>
+          <div v-if="!isActiveEmail" style="display:inline">
+            <p id="emailField" style="display: inline; margin-right: 2em">{{ email }}</p>
+          </div>
+          <div v-if="isActiveEmail" style="display: inline">
+            <input class="form-control" id="email_input" type="text" value="" style="display: inline; width: 25%; height: 2em"/>            
+         </div>
+          
+          <i v-on:click="toggleEmailArea" class="fa fa-pencil-square-o" 
+                                        aria-hidden="true"  style=""></i>
         </div>
+     
         <div class="col-md-10" style="margin-top: 3em; margin-bottom: 3em">
           <div class="form-group" >
-            {% verbatim %}
+   
             <div class="" v-if="isActive">
-              <label for=""><span style="font-weight: bold">About me: </span> 
+              <label for=""><span style="font-weight: bold; margin-top: 3em;">About me: </span> 
                 Instruments you play, influences, how much you tend to write, etc</label>
                   <textarea class="form-control" rows="5" id="user_bio">{{user_bio}}</textarea>
             </div>
@@ -27,7 +39,7 @@
                 <label for=""><span style="font-weight: bold">About me: </span> 
                     <p id="user_bio">{{user_bio}}</p>
             </div>
-            <div >
+            <div>
                 <i v-on:click="toggleTextArea" class="fa fa-pencil-square-o" 
                                   aria-hidden="true"  style="float: right"></i>
             </div>
@@ -84,9 +96,19 @@
                 var bio = document.getElementById('user_bio').value
                 self.vue.isActive = !self.vue.isActive;
                 if(bio != undefined) self.vue.user_bio = bio
-                if(!self.vue.isActive) self.saveUserInfo();
+                if(!self.vue.isActive) self.saveUserBio();
             }
             
+            self.toggleEmailArea = function() {
+                
+                self.vue.isActiveEmail = !self.vue.isActiveEmail;
+                if(self.vue.isActiveEmail) document.getElementById('email_input').value = self.vue.email;
+                if(!self.vue.isActiveEmail) {
+                    self.vue.email = document.getElementById('email_input').value;
+                    self.saveUserEmail();
+                } 
+            }
+
             self.toggleAccountPrivacy = function() {
                 //console.log(self.vue.private_account);
                 var check = document.getElementById('account_checkbox');
@@ -99,9 +121,10 @@
                 $.ajax({
 
                             type: "POST",
-                            url: "/account/update_user_profile",
+                            url: "/account/update_user_account_privacy",
                             data: {"account_private": self.vue.private_account,
-                                   "user_bio": self.vue.user_bio
+                                   "user_bio": self.vue.user_bio,
+                                   "user_email": self.vue.email
                                   },
                             dataType: 'json',
                             success: function (json) {
@@ -111,14 +134,32 @@
                     });
             }
 
-            self.saveUserInfo = function() {
-
+            self.saveUserEmail = function() {
+              
               $.ajax({
 
                             type: "POST",
-                            url: "/account/update_user_profile",
+                            url: "/account/update_user_email",
                             data: { "account_private": self.vue.private_account,
-                                    "user_bio": self.vue.user_bio
+                                    "user_bio": self.vue.user_bio,
+                                    "user_email": self.vue.email
+                                  },
+                            dataType: 'json',
+                            success: function (json) {
+                                self.vue.events = json
+                                console.log(self.vue.events)
+                        }
+                    });
+            }
+            self.saveUserBio = function() {
+              
+              $.ajax({
+
+                            type: "POST",
+                            url: "/account/update_user_bio",
+                            data: { "account_private": self.vue.private_account,
+                                    "user_bio": self.vue.user_bio,
+                                    "user_email": self.vue.email
                                   },
                             dataType: 'json',
                             success: function (json) {
@@ -133,14 +174,18 @@
                 //unsafeDelimiters: ['!{', '}'],
                 data: {
                    isActive: false,
+                   isActiveEmail: false,
                    user_bio: document.getElementById('bio').innerHTML,
                    private_account: document.getElementById('private_account').innerHTML,
+                   email: document.getElementById('user_email').innerHTML
                    
                 },
                 methods: {
                     toggleTextArea: self.toggleTextArea,
-                    saveUserInfo: self.saveUserInfo,
-                    toggleAccountPrivacy: self.toggleAccountPrivacy
+                    saveUserEmail: self.saveUserEmail,
+                    saveUserBio: self.saveUserBio,
+                    toggleAccountPrivacy: self.toggleAccountPrivacy,
+                    toggleEmailArea: self.toggleEmailArea
                 }
             });
             return self;
