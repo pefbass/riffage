@@ -64,10 +64,13 @@
 		{% endif %}
 	</table>
 	
-	<div>
-		<a href="{% url 'riff_edit' riff.pk %}" class="btn btn-default">Edit Riff</a>
-		<button onclick="delete_riff()" class="btn btn-danger">Delete Riff</button>		
-	</div>
+	<!-- If the current user is not the author, they should not be able to edit/delete. -->
+	{% if riff.author == user.profile %}
+		<div>
+			<button href="{% url 'riff_edit' riff.pk %}" class="btn btn-primary">Edit Riff</button>
+			<button onclick="delete_riff()" class="btn btn-danger">Delete Riff</button>		
+		</div>
+	{% endif %}
 
 	<a href="{% url 'collection' %}">Return to Collection</a>
 
