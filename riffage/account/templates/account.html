@@ -5,20 +5,33 @@
     <div class="container" id="vue-div" style="border-radius: 5%; background-color: #EEEEEE; padding: 2em; margin-top: 4em; margin-bottom: 3em">
       <div class="row">
         <div style="display: none">
-            <p id="bio">{{ user.profile.bio }}</p> 
+            <p id="bio">{{ user.profile.bio }}</p>
+            <p id="private_account">{{user.profile.private_account}}</p>
+            <p id="user_email">{{user.email}}</p>
         </div>
         <div class="col-lg-8">
             {% csrf_token %}
-          <h4 class="mt-5" style="padding-bottom: 2em">Account Settings</h4>
-          <p style="">Username: {{ user }}</p>
-          <p style="display: inline; margin-right: 2em">Email: {{ user.email }}</p>
-          <button type="button" class="btn-sm btn-info" style="display: inline;">Reset Email</button>
+          <h4 class="" style="padding-bottom: 2em">Account Settings</h4>
+          <p><span style="font-weight: bold">Username:</span> {{ user }}</p>
+          {% verbatim %}
+           
+          <p style="display: inline; font-weight: bold">Email: </p>
+          <div v-if="!isActiveEmail" style="display:inline">
+            <p id="emailField" style="display: inline; margin-right: 2em">{{ email }}</p>
+          </div>
+          <div v-if="isActiveEmail" style="display: inline">
+            <input class="form-control" id="email_input" type="text" value="" style="display: inline; width: 25%; height: 2em"/>            
+         </div>
+          
+          <i v-on:click="toggleEmailArea" class="fa fa-pencil-square-o" 
+                                        aria-hidden="true"  style=""></i>
         </div>
+     
         <div class="col-md-10" style="margin-top: 3em; margin-bottom: 3em">
           <div class="form-group" >
-            {% verbatim %}
+   
             <div class="" v-if="isActive">
-              <label for=""><span style="font-weight: bold">About me: </span> 
+              <label for=""><span style="font-weight: bold; margin-top: 3em;">About me: </span> 
                 Instruments you play, influences, how much you tend to write, etc</label>
                   <textarea class="form-control" rows="5" id="user_bio">{{user_bio}}</textarea>
             </div>
@@ -26,31 +39,33 @@
                 <label for=""><span style="font-weight: bold">About me: </span> 
                     <p id="user_bio">{{user_bio}}</p>
             </div>
-            <div >
+            <div>
                 <i v-on:click="toggleTextArea" class="fa fa-pencil-square-o" 
                                   aria-hidden="true"  style="float: right"></i>
             </div>
-            {% endverbatim %}
+            
           </div>
-          
+          {% endverbatim %}
           <div class="col-md-12" style="margin-top: 4em">
             <label class="custom-control custom-checkbox">
-              {% if user.profile.private_account %}
-                 <input type="checkbox" class="custom-control-input" checked="checked">
-              {% else %}
-                <input type="checkbox" class="custom-control-input">
-              {% endif %}
+                {% if user.profile.private_account %}
+                    {% verbatim %}
+                        <input id="account_checkbox" v-on:click="toggleAccountPrivacy" type="checkbox" class="custom-control-input" checked="checked">
+                    {% endverbatim %}
+                 {% else %}
+                    {% verbatim %}
+                        <input id="account_checkbox" v-on:click="toggleAccountPrivacy"  type="checkbox" class="custom-control-input">
+                    {% endverbatim %}
+                 {% endif %}
               <span class="custom-control-indicator"></span>
               <span class="custom-control-description" style="font-weight: bold">Private Account?</span>
               <p style="display: inline; margin-left: 3em">Private accounts cannot be viewed by other users and all riffs will be set to "private"</p>
             </label>
-          </div>  
+          </div> 
+          
       </div>
         <div class="col-md-3">
           <button type="button" class="btn btn-info" style="float: right;">Reset Password</button>
-        </div>
-        <div class="col-md-8">
-            <button v-on:click="saveUserInfo" type="button" class="btn btn-primary" style="float: right;">Save</button>
         </div>
     </div>
     </div>
@@ -66,6 +81,14 @@
 
     <!-- Vue.js -->
     <script>
+        
+        //Set checkbox initial value
+        var privacy = String(document.getElementById('private_account').innerHTML);
+        var checkbox = document.getElementById('account_checkbox');
+        checkbox.value = (privacy == "True") ? 'on' : 'off';
+        //console.log(privacy);
+        //console.log(checkbox.value);
+
         var app = function() {
             var self = {};
             
@@ -73,15 +96,71 @@
                 var bio = document.getElementById('user_bio').value
                 self.vue.isActive = !self.vue.isActive;
                 if(bio != undefined) self.vue.user_bio = bio
+                if(!self.vue.isActive) self.saveUserBio();
             }
             
-            self.saveUserInfo = function() {
+            self.toggleEmailArea = function() {
+                
+                self.vue.isActiveEmail = !self.vue.isActiveEmail;
+                if(self.vue.isActiveEmail) document.getElementById('email_input').value = self.vue.email;
+                if(!self.vue.isActiveEmail) {
+                    self.vue.email = document.getElementById('email_input').value;
+                    self.saveUserEmail();
+                } 
+            }
 
+            self.toggleAccountPrivacy = function() {
+                //console.log(self.vue.private_account);
+                var check = document.getElementById('account_checkbox');
+                console.log(check.value);
+                checkbox.value = (checkbox.value == 'on') ? 'off' : 'on';
+                //console.log(checkbox.value);
+                self.vue.private_account = checkbox.value;
+                console.log("Checkbox = " + checkbox.value);
+                console.log("Vue_account = " + self.vue.private_account);
+                $.ajax({
+
+                            type: "POST",
+                            url: "/account/update_user_account_privacy",
+                            data: {"account_private": self.vue.private_account,
+                                   "user_bio": self.vue.user_bio,
+                                   "user_email": self.vue.email
+                                  },
+                            dataType: 'json',
+                            success: function (json) {
+                                self.vue.events = json
+                                console.log(self.vue.events)
+                        }
+                    });
+            }
+
+            self.saveUserEmail = function() {
+              
               $.ajax({
 
                             type: "POST",
-                            url: "/account/update_user_profile",
-                            data: {"user_bio": self.vue.user_bio},
+                            url: "/account/update_user_email",
+                            data: { "account_private": self.vue.private_account,
+                                    "user_bio": self.vue.user_bio,
+                                    "user_email": self.vue.email
+                                  },
+                            dataType: 'json',
+                            success: function (json) {
+                                self.vue.events = json
+                                console.log(self.vue.events)
+                        }
+                    });
+            }
+            self.saveUserBio = function() {
+              
+              $.ajax({
+
+                            type: "POST",
+                            url: "/account/update_user_bio",
+                            data: { "account_private": self.vue.private_account,
+                                    "user_bio": self.vue.user_bio,
+                                    "user_email": self.vue.email
+                                  },
                             dataType: 'json',
                             success: function (json) {
                                 self.vue.events = json
@@ -95,11 +174,18 @@
                 //unsafeDelimiters: ['!{', '}'],
                 data: {
                    isActive: false,
-                   user_bio: document.getElementById('bio').innerHTML
+                   isActiveEmail: false,
+                   user_bio: document.getElementById('bio').innerHTML,
+                   private_account: document.getElementById('private_account').innerHTML,
+                   email: document.getElementById('user_email').innerHTML
+                   
                 },
                 methods: {
                     toggleTextArea: self.toggleTextArea,
-                    saveUserInfo: self.saveUserInfo
+                    saveUserEmail: self.saveUserEmail,
+                    saveUserBio: self.saveUserBio,
+                    toggleAccountPrivacy: self.toggleAccountPrivacy,
+                    toggleEmailArea: self.toggleEmailArea
                 }
             });
             return self;
@@ -112,6 +198,6 @@
    
     </script>
   </body>
-
+  
 </html>
 {% endblock %}
