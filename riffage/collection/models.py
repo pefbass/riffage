@@ -81,9 +81,4 @@ class Riff(models.Model):
 		image_extensions = ['.png', '.jpeg', '.jpg', '.gif', '.svg', '.bmp']
 		_, document_extension = splitext(self.document.name)
 
-		print(document_extension)
-
 		return document_extension in image_extensions
-
-	def getAuthor(self):
-		return self.author.username

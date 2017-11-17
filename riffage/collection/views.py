@@ -21,7 +21,6 @@ def riff_new(request):
 		if form.is_valid():
 			riff = form.save(commit=False)
 			riff.author = request.user.profile
-			print(riff.getAuthor)
 			riff.save()
 
 			return redirect('riff_detail', riff.pk)
