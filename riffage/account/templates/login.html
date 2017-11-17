@@ -31,11 +31,35 @@
                         {% endif %}
 
                         <button type="submit" class="btn btn-primary">Sign in</button>
-                        <input type="hidden" name="next" value="{{ next }}" />
+                        <p style="display: inline; float: right" data-toggle="modal" data-target="#myModal"><a href="#">Forgot Password?</a></p>
                     </form>
                 </div>
             </div>
             <div class="col-md-3"></div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Reset Passowrd</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Email address</label>
+                              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">                            </div>
+                          </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary">Reset</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </div>
     </div>
     <!-- /.container -->
