@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
-
 {% load static %}
+
+{% block title %}
+{{ riff.name }}
+{% endblock %}
 
 {% block content %}
 
-	<h2><bold>{{ riff.name }}</bold></h2>
 	<p><em>{{ riff.priv_vis|yesno:"Private,Public" }}</em></p>
 
 	<table class="riff_detail">

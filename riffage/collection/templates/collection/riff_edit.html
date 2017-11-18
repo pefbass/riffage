@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
+{% block title %}
+Edit Riff
+{% endblock %}
+
 {% block content %}
 
-<h1>Edit Riff</h1>
 <form method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 	{{ form.as_p }}
