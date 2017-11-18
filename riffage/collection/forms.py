@@ -42,6 +42,13 @@ class RiffForm(ModelForm):
 	
 	AUDIO_EXTENSIONS = ['.wav', '.mp3']
 
+	def clean_tags(self):
+		tags = self.cleaned_data.get('tags')
+		if Riff.objects.filter(tags=tags).exists():
+			raise ValidationError('Riff tags must be unique')
+
+		return tags
+	
 	def clean_audio_file(self):
 		audio_file = self.cleaned_data.get('audio_file')
 
@@ -54,3 +61,5 @@ class RiffForm(ModelForm):
 			raise ValidationError('Invalid file extension: type must be one of ' + ', '.join(self.AUDIO_EXTENSIONS))
 
 		return audio_file
+
+
