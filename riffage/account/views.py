@@ -69,7 +69,17 @@ def update_user_account_privacy(request):
 @csrf_exempt
 def update_user_password(request):
     params = {}
-    new_password = request.POST.get('new_password')
-    User.objects.update(password="test")
-    params['success'] = "True"
+    params['success'] = "False"
+
+    new_password1 = request.POST.get('new_password1')
+    old_password = request.POST.get('old_password')
+
+    u = User.objects.get(username=request.user.username)
+    check_password = u.check_password(old_password)
+    if check_password:
+        u.set_password(new_password1)
+        u.save()
+        params['success'] = "True"
+    
+
     return JsonResponse(params)

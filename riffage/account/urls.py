@@ -11,6 +11,5 @@ urlpatterns = [
      url(r'^update_user_bio', views.update_user_bio, name='update_user_bio'),
      url(r'^update_user_email', views.update_user_email, name='update_user_email'),
      url(r'^update_user_account_privacy', views.update_user_account_privacy, name='update_user_account_privacy'),
-     url(r'^update_user_password', views.update_user_email, name='update_user_email'),
-     url(r'^user/password/reset/$', auth_views.password_reset, name="password_reset"),
+     url(r'^update_user_password', views.update_user_password, name='update_user_password'),
 ]
