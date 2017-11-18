@@ -65,7 +65,9 @@ class Riff(models.Model):
 	
 	desc = models.TextField(max_length=200, default='', blank=True)
 
-	tab = models.TextField(max_length=1000, default='G |----|\nD |----|\nA |----|\nE |----|\n')
+	TAB_DEFAULT = 'G |----|\nD |----|\nA |----|\nE |----|\n'
+
+	tab = models.TextField(max_length=1000, default=TAB_DEFAULT)
 
 	tags = models.CharField(max_length=50, default='')
 
@@ -74,11 +76,12 @@ class Riff(models.Model):
 	def document_filename(self):
 		return basename(self.document.name) if self.document else ''
 
+	IMAGE_EXTENSIONS = ['.png', '.jpeg', '.jpg', '.gif', '.svg', '.bmp']
+
 	def document_is_image(self):
 		if not self.document:
 			return
 		
-		image_extensions = ['.png', '.jpeg', '.jpg', '.gif', '.svg', '.bmp']
 		_, document_extension = splitext(self.document.name)
 
-		return document_extension in image_extensions
+		return document_extension in self.IMAGE_EXTENSIONS

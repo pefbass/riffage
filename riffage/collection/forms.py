@@ -22,7 +22,7 @@ class RiffForm(ModelForm):
 		audio = data.get('audio_file')
 
 		# get default value for tab field and remove newlines from the end
-		default_tab = Riff._meta.get_field('tab').get_default().strip('\n')
+		default_tab = Riff.TAB_DEFAULT.strip('\n')
 
 		# if audio doesn't exist and tab doesn't exist or is the default value
 		if not audio and (not tab or tab == default_tab):
@@ -39,6 +39,8 @@ class RiffForm(ModelForm):
 			raise ValidationError('Riff names must be unique')
 
 		return name
+	
+	AUDIO_EXTENSIONS = ['.wav', '.mp3']
 
 	def clean_audio_file(self):
 		audio_file = self.cleaned_data.get('audio_file')
@@ -48,9 +50,7 @@ class RiffForm(ModelForm):
 
 		_, file_extension = splitext(audio_file.name)
 
-		valid_extensions = ['.wav', '.mp3']
-
-		if not file_extension in valid_extensions:
-			raise ValidationError('Invalid file extension: type must be one of ' + ', '.join(extensions))
+		if not file_extension in self.AUDIO_EXTENSIONS:
+			raise ValidationError('Invalid file extension: type must be one of ' + ', '.join(self.AUDIO_EXTENSIONS))
 
 		return audio_file
