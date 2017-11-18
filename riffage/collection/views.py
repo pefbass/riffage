@@ -49,7 +49,7 @@ def riff_edit(request, pk):
 		if form.is_valid():
 			riff = form.save(commit=False)
 			riff.save()
-			return redirect(reverse('riff_detail'), pk=riff.pk)
+			return redirect('riff_detail', pk=riff.pk)
 	else:
 		form = RiffForm(instance=riff)
 	return render(request, 'collection/riff_edit.html', {'form': form, 'params' : params})

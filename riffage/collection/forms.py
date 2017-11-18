@@ -4,7 +4,7 @@ from .models import Riff
 class RiffForm(ModelForm):
 	class Meta:
 		model = Riff
-		fields = ['name', 'riff_key', 'timesig_num', 'timesig_denom', 'desc', 'tab', 'tags', 'audio_file']
+		fields = ['name', 'riff_key', 'timesig_num', 'timesig_denom', 'desc', 'tab', 'audio_file', 'tags']
 
 	def clean(self):
 		# get cleaned data
@@ -29,6 +29,13 @@ class RiffForm(ModelForm):
 
 		return name
 
+	def clean_tags(self):
+		tags = self.cleaned_data.get('tags')
+		if Riff.objects.filter(tags=tags).exists():
+			raise ValidationError('Riff tags must be unique')
+
+		return tags
+	
 	def clean_audio_file(self):
 		audio_file = self.cleaned_data.get('audio_file')
 
@@ -43,3 +50,5 @@ class RiffForm(ModelForm):
 			raise ValidationError('Invalid file extension: type must be one of ' + ', '.join(extensions))
 
 		return audio_file
+
+
