@@ -65,7 +65,44 @@
           
       </div>
         <div class="col-md-3">
-          <button type="button" class="btn btn-info" style="float: right;">Change Password</button>
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#password_modal" style="float: right;">Change Password</button>
+        </div>
+       <!-- Modal -->
+        <div class="modal fade" id="password_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Old Password</label>
+                            <input type="password" class="form-control" id="old_password" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">New Password</label>
+                            <input type="password" class="form-control" id="new_password1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">New Password (again)</label>
+                            <input type="password" class="form-control" id="new_password2" placeholder="Password">
+                        </div>
+                </div>
+                <div class="alert alert-success" v-if="passwdChange">
+                    <strong>Success!</strong> Your password has been changed
+                </div>
+                <div class="alert alert-danger" v-if="passwdError">
+                    <strong>Error!</strong> There is an error in the password field
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" v-on:click="updateUserPassword" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
     </div>
@@ -111,12 +148,12 @@
             self.toggleAccountPrivacy = function() {
                 //console.log(self.vue.private_account);
                 var check = document.getElementById('account_checkbox');
-                console.log(check.value);
+                //console.log(check.value);
                 checkbox.value = (checkbox.value == 'on') ? 'off' : 'on';
                 //console.log(checkbox.value);
                 self.vue.private_account = checkbox.value;
-                console.log("Checkbox = " + checkbox.value);
-                console.log("Vue_account = " + self.vue.private_account);
+                //console.log("Checkbox = " + checkbox.value);
+                //console.log("Vue_account = " + self.vue.private_account);
                 $.ajax({
 
                             type: "POST",
@@ -167,20 +204,38 @@
                         }
                     });
             }
-            self.saveUserNewPassword = function() {
-              
-              $.ajax({
 
-                            type: "POST",
-                            url: "/account/update_user_password",
-                            data: { "new_password": self.vue.new_password
-                                  },
-                            dataType: 'json',
-                            success: function (json) {
-                                self.vue.events = json
-                                console.log(self.vue.events)
-                        }
-                    });
+            self.passwordError = function() {
+
+            }
+            self.updateUserPassword = function() {
+                self.vue.passwdChange = false;
+                self.vue.passwdError = false;
+                self.vue.old_password = document.getElementById('old_password').value;
+                self.vue.new_password1 = document.getElementById('new_password1').value;
+                self.vue.new_password2 = document.getElementById('new_password2').value;
+
+                if (self.vue.new_password1 != self.vue.new_password2) {
+                    self.vue.passwdError = true;
+                } else {
+                
+                    $.ajax({
+
+                                    type: "POST",
+                                    url: "/account/update_user_password",
+                                    data: { "new_password1": self.vue.new_password1,
+                                            "new_password2": self.vue.new_password2,
+                                            "old_password": self.vue.old_password
+                                        },
+                                    dataType: 'json',
+                                    success: function (json) {
+                                        self.vue.events = json
+                                        self.vue.passwdChange = (json.success == 'True' ) ? true : false;
+                                        self.vue.passwdError = (json.success == 'True' ) ? false : true;
+                                        console.log(self.vue.events)
+                                }
+                            });
+                }
             }
             self.vue = new Vue({
                 el: "#vue-div",
@@ -192,7 +247,11 @@
                    user_bio: document.getElementById('bio').innerHTML,
                    private_account: document.getElementById('private_account').innerHTML,
                    email: document.getElementById('user_email').innerHTML,
-                   new_password: ""
+                   old_password: "",
+                   new_password1: "",
+                   new_password2: "",
+                   passwdChange: false,
+                   passwdError: false
                    
                 },
                 methods: {
@@ -200,7 +259,9 @@
                     saveUserEmail: self.saveUserEmail,
                     saveUserBio: self.saveUserBio,
                     toggleAccountPrivacy: self.toggleAccountPrivacy,
-                    toggleEmailArea: self.toggleEmailArea
+                    toggleEmailArea: self.toggleEmailArea,
+                    updateUserPassword: self.updateUserPassword,
+                    passwordError: self.passwordError
                 }
             });
             return self;

@@ -2,6 +2,33 @@ from os.path import basename, splitext
 from django.db import models
 from riffage.account.models import Profile
 
+
+class SeparatedValuesField(models.TextField):
+    def __init__(self, *args, **kwargs):
+        self.token = kwargs.pop('token', ',')
+        super(SeparatedValuesField, self).__init__(*args, **kwargs)
+
+    def from_db_value(self, value, expression, connection, context):
+    	if value is None:
+    		return value
+    	return value.split(self.token)
+
+    def to_python(self, value):
+        if not value: return
+        if isinstance(value, list):
+            return value
+        return value.split(self.token)
+
+    def get_db_prep_value(self, value):
+        if not value: return
+        assert(isinstance(value, list) or isinstance(value, tuple))
+        return self.token.join([unicode(s) for s in value])
+
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.get_db_prep_value(value)
+
+
 class Riff(models.Model):
 	name = models.CharField(max_length=20)
 
@@ -69,6 +96,9 @@ class Riff(models.Model):
 
 	tab = models.TextField(max_length=1000, default=TAB_DEFAULT, verbose_name='Tab')
 
+<<<<<<< HEAD
+	tags = models.TextField(max_length=50, default='')
+=======
 	tags = models.CharField(max_length=50, default='')
 
 	document = models.FileField(upload_to='riff_documents/', blank=True, null=True, verbose_name='Documentation')
@@ -85,3 +115,4 @@ class Riff(models.Model):
 		_, document_extension = splitext(self.document.name)
 
 		return document_extension in self.IMAGE_EXTENSIONS
+>>>>>>> 394293dccf2b5131ee9c4181aa051b162711498a

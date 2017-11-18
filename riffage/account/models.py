@@ -9,7 +9,7 @@ from django.dispatch import receiver
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.CharField(max_length=2000, default="TEST")
+    bio = models.CharField(max_length=2000, default="")
     private_account = models.BooleanField(default=True)
 
 @receiver(post_save, sender=User) 
