@@ -82,19 +82,4 @@ class Riff(models.Model):
 		image_extensions = ['.png', '.jpeg', '.jpg', '.gif', '.svg', '.bmp']
 		_, document_extension = splitext(self.document.name)
 
-		print(document_extension)
-
 		return document_extension in image_extensions
-
-#	def priv_precedence(self):
-#		print("In function\n")
-#		if self.author.private_account:
-#			print(self.name)
-#			self.priv_vis = True
-#			if self.priv_vis = True:
-#				print('True')
-#			self.priv_vis.widget.attrs['readonly'] = True
-#			return
-
-	def getAuthor(self):
-		return self.author.username

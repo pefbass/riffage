@@ -20,7 +20,7 @@
             <p id="emailField" style="display: inline; margin-right: 2em">{{ email }}</p>
           </div>
           <div v-if="isActiveEmail" style="display: inline">
-            <input class="form-control" id="email_input" type="text" value="" style="display: inline; width: 25%; height: 2em"/>            
+            <input class="form-control" id="email_input" v-model="email" type="text" value="" style="display: inline; width: 25%; height: 2em"/>            
          </div>
           
           <i v-on:click="toggleEmailArea" class="fa fa-pencil-square-o" 
@@ -65,7 +65,7 @@
           
       </div>
         <div class="col-md-3">
-          <button type="button" class="btn btn-info" style="float: right;">Reset Password</button>
+          <button type="button" class="btn btn-info" style="float: right;">Change Password</button>
         </div>
     </div>
     </div>
@@ -102,7 +102,6 @@
             self.toggleEmailArea = function() {
                 
                 self.vue.isActiveEmail = !self.vue.isActiveEmail;
-                if(self.vue.isActiveEmail) document.getElementById('email_input').value = self.vue.email;
                 if(!self.vue.isActiveEmail) {
                     self.vue.email = document.getElementById('email_input').value;
                     self.saveUserEmail();
@@ -168,6 +167,21 @@
                         }
                     });
             }
+            self.saveUserNewPassword = function() {
+              
+              $.ajax({
+
+                            type: "POST",
+                            url: "/account/update_user_password",
+                            data: { "new_password": self.vue.new_password
+                                  },
+                            dataType: 'json',
+                            success: function (json) {
+                                self.vue.events = json
+                                console.log(self.vue.events)
+                        }
+                    });
+            }
             self.vue = new Vue({
                 el: "#vue-div",
                 //rdelimiters: ['$[', ']'],
@@ -177,7 +191,8 @@
                    isActiveEmail: false,
                    user_bio: document.getElementById('bio').innerHTML,
                    private_account: document.getElementById('private_account').innerHTML,
-                   email: document.getElementById('user_email').innerHTML
+                   email: document.getElementById('user_email').innerHTML,
+                   new_password: ""
                    
                 },
                 methods: {

@@ -65,3 +65,11 @@ def update_user_account_privacy(request):
     Profile.objects.update(private_account=privacy)
     params['success'] = "True"
     return JsonResponse(params)
+
+@csrf_exempt
+def update_user_password(request):
+    params = {}
+    new_password = request.POST.get('new_password')
+    User.objects.update(password="test")
+    params['success'] = "True"
+    return JsonResponse(params)
