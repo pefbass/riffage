@@ -1,5 +1,6 @@
 from os.path import basename, splitext
 from django.db import models
+from django.forms import forms
 from riffage.account.models import Profile
 
 class Riff(models.Model):
@@ -84,6 +85,16 @@ class Riff(models.Model):
 		print(document_extension)
 
 		return document_extension in image_extensions
+
+#	def priv_precedence(self):
+#		print("In function\n")
+#		if self.author.private_account:
+#			print(self.name)
+#			self.priv_vis = True
+#			if self.priv_vis = True:
+#				print('True')
+#			self.priv_vis.widget.attrs['readonly'] = True
+#			return
 
 	def getAuthor(self):
 		return self.author.username
