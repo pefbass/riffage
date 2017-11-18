@@ -1,10 +1,18 @@
 from django.forms import ModelForm, ValidationError
+from os.path import splitext
 from .models import Riff
 
 class RiffForm(ModelForm):
 	class Meta:
 		model = Riff
 		fields = ['name', 'riff_key', 'timesig_num', 'timesig_denom', 'desc', 'tab', 'audio_file', 'tags']
+=======
+		fields = ['name', 'priv_vis', 'riff_key', 'timesig_num', 'timesig_denom', 'desc', 'tab', 'tags', 'audio_file', 'document']
+	
+	def __init__(self, *args, **kwargs):
+		# set edit=True if this form is editing a riff model rather than creating one
+		self.edit = kwargs.pop('edit', False)
+		super(RiffForm, self).__init__(*args, **kwargs)
 
 	def clean(self):
 		# get cleaned data
@@ -16,7 +24,7 @@ class RiffForm(ModelForm):
 		audio = data.get('audio_file')
 
 		# get default value for tab field and remove newlines from the end
-		default_tab = Riff._meta.get_field('tab').get_default().strip('\n')
+		default_tab = Riff.TAB_DEFAULT.strip('\n')
 
 		# if audio doesn't exist and tab doesn't exist or is the default value
 		if not audio and (not tab or tab == default_tab):
@@ -24,10 +32,17 @@ class RiffForm(ModelForm):
 
 	def clean_name(self):
 		name = self.cleaned_data.get('name')
+
+		# if this form is editing a riff model, don't check for duplicate name
+		if self.edit:
+			return name
+
 		if Riff.objects.filter(name=name).exists():
 			raise ValidationError('Riff names must be unique')
 
 		return name
+	
+	AUDIO_EXTENSIONS = ['.wav', '.mp3']
 
 	def clean_tags(self):
 		tags = self.cleaned_data.get('tags')
@@ -41,13 +56,11 @@ class RiffForm(ModelForm):
 
 		if not audio_file:
 			return audio_file
-		
-		file_name = audio_file.name
 
-		extensions = ['.wav', '.mp3']
+		_, file_extension = splitext(audio_file.name)
 
-		if not any(file_name.endswith(ext) for ext in extensions):
-			raise ValidationError('Invalid file extension: type must be one of ' + ', '.join(extensions))
+		if not file_extension in self.AUDIO_EXTENSIONS:
+			raise ValidationError('Invalid file extension: type must be one of ' + ', '.join(self.AUDIO_EXTENSIONS))
 
 		return audio_file
 

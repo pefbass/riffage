@@ -6,7 +6,7 @@
 	<table class="collection_header>" style="width:80%">
 		<tr>
 			<td><h1>Collection</h1></td>
-			<td>
+			<td align="right">
 				<a href="riff_new" class="btn btn-success">New Riff</a>
 			</td>
 		</tr>
@@ -17,6 +17,9 @@
 	<input type="text" id="myInput" onkeyup="search_riffs()" placeholder="Shreddicus McRiffalicious" title="Search" style="width:80%">
 	<table class="collection" id="myTable" style="width:80%">
 		<tr>
+			{% if not user.profile.private_account %}
+				<th>Author</th>
+			{% endif %}
 			<th>Riff</th>
 			<th>Last Updated</th>
 			<th>Key</th>
@@ -26,44 +29,52 @@
 			<th>Notation Included?</th>
 		</tr>
 		{% for riff in riffs %}
-			<tr>
-				<td><a href="{% url 'riff_detail' pk=riff.pk %}">{{ riff.name }}</a></td>
-				<td>Yesterday</td>
-				<td>{{ riff.riff_key }}</td>
-				<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
-				<td>{{ riff.tags }}</td>
-				<td>{{ riff.audio_file|yesno:"Yes!,No!" }}</td>
-				<td>No!</td>
-			</tr>
+
+			<!-- Only show riffs that are either owned by the user or public -->
+			{% if riff.priv_vis == False or riff.author == user.profile %}
+				<tr>
+					{% if not user.profile.private_account %}
+						<td>{{ riff.author.user }}</td>
+					{% endif %}
+					<td><a href="{% url 'riff_detail' pk=riff.pk %}">{{ riff.name }}</a></td>
+					<td>Yesterday</td>
+					<td>{{ riff.riff_key }}</td>
+					<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
+					<td>{{ riff.tags }}</td>
+					<td>{{ riff.audio_file|yesno:"Yes!,No!" }}</td>
+					<td>{{ riff.document|yesno:"Yes!,No!" }}</td>
+				</tr>
+			{% endif %}
+			
 		{% endfor %}
 	</table>
 </div>
 
-	<script>
+<script>
 
-		var search_riffs = (function() {
-			var input, filter, table, tr, td, i;
-			input = document.getElementById("myInput");
-			table = document.getElementById("myTable");
-			tr = table.getElementsByTagName("tr");
+	var search_riffs = (function() {
+		var input, filter, table, tr, td, i;
+		input = document.getElementById("myInput");
+		table = document.getElementById("myTable");
+		tr = table.getElementsByTagName("tr");
 
-			return function() {
-				filter = input.value.toUpperCase();
-				
-				for (i = 0; i < tr.length; i++) {
-					td = tr[i].getElementsByTagName("td")[0];
-		
-					if (td) {
-						if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-							tr[i].style.display = "";
-						} else {
-							tr[i].style.display = "none";
-						}
-					}       
-				}
+		return function() {
+			filter = input.value.toUpperCase();
+			
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+	
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}       
 			}
-		})();
+		}
+	})();
 
-	</script>
+</script>
 
 {% endblock %}

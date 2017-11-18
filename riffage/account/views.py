@@ -6,11 +6,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import auth
 from .forms import SignUpForm
 from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from riffage.account.models import Profile
 
 def account(request):
     params = {}
     params['category'] = 'account'
-   
     if request.user.is_authenticated():
         return render(request, 'account.html', {'params': params})
     else:
@@ -38,3 +40,46 @@ def logout(request):
 
 def collections(request):
     return redirect('/collection')
+
+@csrf_exempt
+def update_user_bio(request):
+    params = {}
+    bio = request.POST.get('user_bio')
+    Profile.objects.update(bio=bio)
+    params['success'] = "True"
+    return JsonResponse(params)
+
+@csrf_exempt
+def update_user_email(request):
+    params = {}
+    email = request.POST.get('user_email')
+    User.objects.update(email=email)
+    params['success'] = "True"
+    return JsonResponse(params)
+
+@csrf_exempt
+def update_user_account_privacy(request):
+    params = {}
+    private_account = request.POST.get('account_private')
+    privacy = True if (private_account == 'on') else False
+    Profile.objects.update(private_account=privacy)
+    params['success'] = "True"
+    return JsonResponse(params)
+
+@csrf_exempt
+def update_user_password(request):
+    params = {}
+    params['success'] = "False"
+
+    new_password1 = request.POST.get('new_password1')
+    old_password = request.POST.get('old_password')
+
+    u = User.objects.get(username=request.user.username)
+    check_password = u.check_password(old_password)
+    if check_password:
+        u.set_password(new_password1)
+        u.save()
+        params['success'] = "True"
+    
+
+    return JsonResponse(params)

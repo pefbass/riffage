@@ -1,4 +1,6 @@
+from os.path import basename, splitext
 from django.db import models
+from riffage.account.models import Profile
 
 
 class SeparatedValuesField(models.TextField):
@@ -29,6 +31,15 @@ class SeparatedValuesField(models.TextField):
 
 class Riff(models.Model):
 	name = models.CharField(max_length=20)
+
+	# This is the check-box for Private Visibility.
+	# We default all riffs as Private (checked).
+	priv_vis = models.BooleanField(default=True)
+
+	author = models.ForeignKey(
+			Profile,
+			on_delete=models.CASCADE,
+			null=True)
 
 	KEY_CHOICES = [
 		('', 'Select'),
@@ -77,10 +88,31 @@ class Riff(models.Model):
 
 	timesig_denom = models.IntegerField(choices=TIMESIG_DENOM_CHOICES, default=4)
 
-	audio_file = models.FileField(upload_to='riffs/', blank=True, null=True)
+	audio_file = models.FileField(upload_to='riff_audio/', blank=True, null=True)
 	
-	desc = models.TextField(max_length=200, default='')
+	desc = models.TextField(max_length=200, default='', blank=True)
 
-	tab = models.TextField(max_length=1000, default='G |----|\nD |----|\nA |----|\nE |----|\n')
+	TAB_DEFAULT = 'G |----|\nD |----|\nA |----|\nE |----|\n'
 
+	tab = models.TextField(max_length=1000, default=TAB_DEFAULT)
+
+<<<<<<< HEAD
 	tags = models.TextField(max_length=50, default='')
+=======
+	tags = models.CharField(max_length=50, default='')
+
+	document = models.FileField(upload_to='riff_documents/', blank=True, null=True)
+
+	def document_filename(self):
+		return basename(self.document.name) if self.document else ''
+
+	IMAGE_EXTENSIONS = ['.png', '.jpeg', '.jpg', '.gif', '.svg', '.bmp']
+
+	def document_is_image(self):
+		if not self.document:
+			return
+		
+		_, document_extension = splitext(self.document.name)
+
+		return document_extension in self.IMAGE_EXTENSIONS
+>>>>>>> 394293dccf2b5131ee9c4181aa051b162711498a
