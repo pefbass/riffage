@@ -45,9 +45,9 @@ def riff_edit(request, pk):
 	riff = get_object_or_404(Riff, pk=pk)
 	if request.method == "POST":
 		form = RiffForm(request.POST, request.FILES, instance=riff, edit=True)
-		if riff.author.private_account:
-			print("PRIVATE ACCOUNT!!")
-		#riff.priv_precedence()
+#		if riff.author.private_account:
+#			print("PRIVATE ACCOUNT!!")
+#		riff.priv_precedence()
 		if form.is_valid():
 			riff = form.save()
 			return redirect('riff_detail', riff.pk)

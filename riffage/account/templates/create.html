@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
+
+{% block title %}
+Create Account
+{% endblock %}
+
 {% block content %}
 
     <!-- Page Content -->
     <div class="container">
-        <div class="lgn-container col-lg-6" style="margin: 0 auto; margin-top: 4.85em; 
-             border-radius: 5%; background-color: #EEEEEE;">
+        <div class="lgn-container col-lg-6" style="margin: 0 auto; border-radius: 5%; background-color: #EEEEEE;">
             <div style="padding: 2em">
-                <h2 style="margin-bottom: 1em">Sign up</h2>
                 <form method="post">
                     {% csrf_token %}
                     {% for field in form %}
