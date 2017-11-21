@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^collection/', include('riffage.collection.urls')),
     url(r'^account/', include('riffage.account.urls')),
+    url(r'^inbox/', include('riffage.inbox.urls'))
 ]
 
 if settings.DEBUG:

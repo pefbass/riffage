@@ -23,7 +23,7 @@
 	</tr>
 	{% for riff in riffs %}
 
-		<!-- Only show riffs that are either owned by the user or public -->
+		<!-- Only show riffs that are either owned by the user or public. -->
 		{% if riff.priv_vis == False or riff.author == user.profile %}
 			<tr>
 				<td>{{ riff.author.user }}</td>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'riffage',
     'riffage.collection',
     'riffage.account',
+    'riffage.inbox',
 ]
 
 MIDDLEWARE = [

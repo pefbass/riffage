@@ -39,7 +39,7 @@
 						<ul class="navbar-nav ml-auto">
 
 							<!-- Collections -->
-							<li {% if params.category == "collections" or params.category == "account" %}
+							<li {% if params.category == "collections" or params.category == "account" or params.category == "inbox" %}
 									{% if params.category == 'collections' %}
 										class="nav-item active"
 									{ % else % }
@@ -51,8 +51,21 @@
 								<a class="nav-link" href="{% url 'collection' %}">Collection</a>
 							</li>
 
+							<!-- Inbox -->
+							<li {% if params.category == "collections" or params.category == "account" or params.category == "inbox" %}
+								{% if params.category == 'inbox' %}
+									class="nav-item active"
+								{ % else % }
+									class="nav-item"
+								{%  endif %}
+							{% else %}
+								style="display: none"
+							{% endif %}>
+							<a class="nav-link" href="{% url 'inbox' %}">Inbox</a>
+							</li>
+
 							<!-- Account -->
-							<li {% if params.category == "collections" or params.category == "account" %}
+							<li {% if params.category == "collections" or params.category == "account" or params.category == "inbox" %}
 								{% if params.category == 'account' %}
 									class="nav-item active"
 								{ % else % }
@@ -65,7 +78,7 @@
 							</li>
 
 							<!-- Login -->
-							<li {% if params.category != "account" and params.category != "collections"%}
+							<li {% if params.category != "account" and params.category != "collections" and params.category != "inbox" %}
 									{% if params.category != 'create' %}
 										class="nav-item active"
 									{ % else % }
@@ -78,7 +91,7 @@
 							</li>
 
 							<!-- Create Account -->
-							<li {% if params.category != "account" and params.category != "collections"%} 
+							<li {% if params.category != "account" and params.category != "collections" and params.category != "inbox" %} 
 									{% if params.category == 'create' %}
 										class="nav-item active"
 									{ % else % }
@@ -89,8 +102,9 @@
 								{% endif %}>
 								<a class="nav-link" href="{% url 'create' %}">Sign Up</a>
 							</li>
+
 							<!-- Logout -->
-							<li {% if params.category == "collections" or params.category == "account" %}
+							<li {% if params.category == "collections" or params.category == "account" or params.category == "inbox" %}
 								{% else %}
 									style="display: none"
 								{% endif %}>
