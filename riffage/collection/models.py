@@ -3,7 +3,6 @@ from django.db import models
 from django.forms import forms
 from riffage.account.models import Profile
 
-
 class SeparatedValuesField(models.TextField):
     def __init__(self, *args, **kwargs):
         self.token = kwargs.pop('token', ',')
@@ -95,7 +94,7 @@ class Riff(models.Model):
 
 	TAB_DEFAULT = 'G |----|\nD |----|\nA |----|\nE |----|\n'
 
-	tab = models.TextField(max_length=1000, default=TAB_DEFAULT, verbose_name='Tab')
+	tab = models.TextField(max_length=1000, default=TAB_DEFAULT, verbose_name='Tablature')
 
 	tags = models.CharField(max_length=50, default='')
 
