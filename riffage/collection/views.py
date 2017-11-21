@@ -43,14 +43,10 @@ def riff_edit(request, pk):
 	if request.method == "POST":
 		form = RiffForm(request.POST, request.FILES, instance=riff, edit=True)
 		if form.is_valid():
-<<<<<<< HEAD
 			riff = form.save(commit=False)
 			riff.save()
 			return redirect('riff_detail', pk=riff.pk)
-=======
-			riff = form.save()
-			return redirect('riff_detail', riff.pk)
->>>>>>> 394293dccf2b5131ee9c4181aa051b162711498a
+
 	else:
 		form = RiffForm(instance=riff)
 	
