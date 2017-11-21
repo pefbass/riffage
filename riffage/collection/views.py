@@ -49,15 +49,10 @@ def riff_edit(request, pk):
 #			print("PRIVATE ACCOUNT!!")
 #		riff.priv_precedence()
 		if form.is_valid():
-<<<<<<< HEAD
 			riff = form.save(commit=False)
 			riff.save()
 			return redirect('riff_detail', pk=riff.pk)
 
-=======
-			riff = form.save()
-			return redirect('riff_detail', riff.pk)
->>>>>>> 7a32ab05aafc5aa491df0a998c60f0250996cc66
 	else:
 		form = RiffForm(instance=riff)
 	
