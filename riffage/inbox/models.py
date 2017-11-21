@@ -1,5 +1,3 @@
-from django.http import *
-from django.shortcuts import render, get_object_or_404, redirect
+from os.path import basename, splitext
 from django.db import models
-
-# Create your models here.
+from django.forms import forms
