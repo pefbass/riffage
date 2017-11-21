@@ -96,7 +96,7 @@ class Riff(models.Model):
 
 	tab = models.TextField(max_length=1000, default=TAB_DEFAULT, verbose_name='Tablature')
 
-	tags = models.CharField(max_length=50, default='')
+	tags = models.TextField(max_length=50, default='')
 
 	document = models.FileField(upload_to='riff_documents/', blank=True, null=True, verbose_name='Documentation')
 
@@ -112,3 +112,4 @@ class Riff(models.Model):
 		_, document_extension = splitext(self.document.name)
 
 		return document_extension in self.IMAGE_EXTENSIONS
+
