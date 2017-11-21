@@ -1,5 +1,6 @@
 from os.path import basename, splitext
 from django.db import models
+from django.forms import forms
 from riffage.account.models import Profile
 
 
@@ -34,7 +35,7 @@ class Riff(models.Model):
 
 	# This is the check-box for Private Visibility.
 	# We default all riffs as Private (checked).
-	priv_vis = models.BooleanField(default=True)
+	priv_vis = models.BooleanField(default=True, verbose_name='Private')
 
 	author = models.ForeignKey(
 			Profile,
@@ -73,9 +74,9 @@ class Riff(models.Model):
 		('Chromatic', 'Chromatic'),
 	]
 
-	riff_key = models.CharField(max_length=20, choices=KEY_CHOICES, default='Select')
+	riff_key = models.CharField(max_length=20, choices=KEY_CHOICES, default='Select', verbose_name='Key')
 
-	timesig_num = models.IntegerField(default=4)
+	timesig_num = models.IntegerField(default=4, verbose_name='Time Signature Numerator')
 
 	TIMESIG_DENOM_CHOICES = [
 		(1, '1'),
@@ -86,20 +87,24 @@ class Riff(models.Model):
 		(32, '32'),
 	]
 
-	timesig_denom = models.IntegerField(choices=TIMESIG_DENOM_CHOICES, default=4)
+	timesig_denom = models.IntegerField(choices=TIMESIG_DENOM_CHOICES, default=4, verbose_name='Time Signature Denominator')
 
-	audio_file = models.FileField(upload_to='riff_audio/', blank=True, null=True)
+	audio_file = models.FileField(upload_to='riff_audio/', blank=True, null=True, verbose_name='Audio File')
 	
-	desc = models.TextField(max_length=200, default='', blank=True)
+	desc = models.TextField(max_length=200, default='', blank=True, verbose_name='Description')
 
 	TAB_DEFAULT = 'G |----|\nD |----|\nA |----|\nE |----|\n'
 
-	tab = models.TextField(max_length=1000, default=TAB_DEFAULT)
+	tab = models.TextField(max_length=1000, default=TAB_DEFAULT, verbose_name='Tab')
 
+<<<<<<< HEAD
 	tags = models.TextField(max_length=50, default='')
 
+=======
+	tags = models.CharField(max_length=50, default='')
+>>>>>>> 7a32ab05aafc5aa491df0a998c60f0250996cc66
 
-	document = models.FileField(upload_to='riff_documents/', blank=True, null=True)
+	document = models.FileField(upload_to='riff_documents/', blank=True, null=True, verbose_name='Documentation')
 
 	def document_filename(self):
 		return basename(self.document.name) if self.document else ''
@@ -112,4 +117,8 @@ class Riff(models.Model):
 		
 		_, document_extension = splitext(self.document.name)
 
+<<<<<<< HEAD
 		return document_extension in self.IMAGE_EXTENSIONS
+=======
+		return document_extension in self.IMAGE_EXTENSIONS
+>>>>>>> 7a32ab05aafc5aa491df0a998c60f0250996cc66

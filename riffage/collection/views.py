@@ -2,14 +2,17 @@ from django.http import *
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import RiffForm
 from .models import Riff
+from django.contrib.auth.models import User
 from django.contrib import auth
 
 def collection(request):
 	riffs = Riff.objects.all()
+	users = User.objects.all()
+	#riff.priv_vis == False or riff.author == user.profile or (riff.author != user.profile and riff.author.profile.private_account == False)
 	params = {}
 	params['category'] = 'collections'
 	return render(request, 'collection/collection.html',
-		{ 'riffs' : riffs,
+		{'riffs' : riffs,
 		'params': params,})
 
 def riff_new(request):
@@ -42,11 +45,19 @@ def riff_edit(request, pk):
 	riff = get_object_or_404(Riff, pk=pk)
 	if request.method == "POST":
 		form = RiffForm(request.POST, request.FILES, instance=riff, edit=True)
+#		if riff.author.private_account:
+#			print("PRIVATE ACCOUNT!!")
+#		riff.priv_precedence()
 		if form.is_valid():
+<<<<<<< HEAD
 			riff = form.save(commit=False)
 			riff.save()
 			return redirect('riff_detail', pk=riff.pk)
 
+=======
+			riff = form.save()
+			return redirect('riff_detail', riff.pk)
+>>>>>>> 7a32ab05aafc5aa491df0a998c60f0250996cc66
 	else:
 		form = RiffForm(instance=riff)
 	

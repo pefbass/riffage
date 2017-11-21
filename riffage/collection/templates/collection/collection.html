@@ -1,54 +1,44 @@
 {% extends 'base.html' %}
+{% block title %}
+<div style="margin-bottom: 10px;">	
+	<h3 style="font-weight: bold; float: left;">Collection</h3>
+	<a href="riff_new" class="btn btn-success" style='float: right;'>New Riff</a>
+	<br>
+</div>
+{% endblock %}
 
 {% block content %}
 
-<div align="center">
-	<table class="collection_header>" style="width:80%">
-		<tr>
-			<td><h1>Collection</h1></td>
-			<td align="right">
-				<a href="riff_new" class="btn btn-success">New Riff</a>
-			</td>
-		</tr>
-	</table>
+<input type="text" id="myInput" onkeyup="search_riffs()" placeholder="Shreddicus McRiffalicious" title="Search">
+<table class="collection" id="myTable">
+	<tr>
+		<th>Author</th>
+		<th>Riff</th>
+		<th>Last Updated</th>
+		<th>Key</th>
+		<th>Time Signature</th>
+		<th>Tags</th>
+		<th>Audio Included?</th>
+		<th>Notation Included?</th>
+	</tr>
+	{% for riff in riffs %}
 
-	<br>
-
-	<input type="text" id="myInput" onkeyup="search_riffs()" placeholder="Shreddicus McRiffalicious" title="Search" style="width:80%">
-	<table class="collection" id="myTable" style="width:80%">
-		<tr>
-			{% if not user.profile.private_account %}
-				<th>Author</th>
-			{% endif %}
-			<th>Riff</th>
-			<th>Last Updated</th>
-			<th>Key</th>
-			<th>Time Signature</th>
-			<th>Tags</th>
-			<th>Audio Included?</th>
-			<th>Notation Included?</th>
-		</tr>
-		{% for riff in riffs %}
-
-			<!-- Only show riffs that are either owned by the user or public -->
-			{% if riff.priv_vis == False or riff.author == user.profile %}
-				<tr>
-					{% if not user.profile.private_account %}
-						<td>{{ riff.author.user }}</td>
-					{% endif %}
-					<td><a href="{% url 'riff_detail' pk=riff.pk %}">{{ riff.name }}</a></td>
-					<td>Yesterday</td>
-					<td>{{ riff.riff_key }}</td>
-					<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
-					<td>{{ riff.tags }}</td>
-					<td>{{ riff.audio_file|yesno:"Yes!,No!" }}</td>
-					<td>{{ riff.document|yesno:"Yes!,No!" }}</td>
-				</tr>
-			{% endif %}
-			
-		{% endfor %}
-	</table>
-</div>
+		<!-- Only show riffs that are either owned by the user or public. -->
+		{% if riff.priv_vis == False or riff.author == user.profile %}
+			<tr>
+				<td>{{ riff.author.user }}</td>
+				<td><a href="{% url 'riff_detail' pk=riff.pk %}">{{ riff.name }}</a></td>
+				<td>Yesterday</td>
+				<td>{{ riff.riff_key }}</td>
+				<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
+				<td>{{ riff.tags }}</td>
+				<td>{{ riff.audio_file|yesno:"Yes!,No!" }}</td>
+				<td>{{ riff.document|yesno:"Yes!,No!" }}</td>
+			</tr>
+		{% endif %}
+		
+	{% endfor %}
+</table>
 
 <script>
 

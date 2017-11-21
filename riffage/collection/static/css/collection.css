@@ -1,5 +1,6 @@
 .collection {
 	border: 1px solid black;
+
 }
 
 .riff_detail {
@@ -37,8 +38,14 @@
   padding: 12px;
 }
 
+#myTable th {
+  background-color: #7e7e7e;
+  color: #FFFFFF;
+}
+
 #myTable tr {
   border-bottom: 1px solid #ddd;
+  background-color: #FFFFFF;
 }
 
 #myTable tr.header, #myTable tr:hover {
