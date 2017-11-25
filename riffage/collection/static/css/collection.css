@@ -38,6 +38,10 @@
   padding: 10px;
 }
 
+#myTable col {
+  width: 12.5%;
+}
+
 #myTable th {
   background-color: #7e7e7e;
   color: #FFFFFF;

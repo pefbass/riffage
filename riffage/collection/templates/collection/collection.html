@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
+
 {% block title %}
 <div style="margin-bottom: 10px;">	
 	<h3 style="font-weight: bold; float: left;">Collection</h3>
@@ -9,18 +11,18 @@
 
 {% block content %}
 
-<input type="text" id="myInput" onkeyup="search_riffs()" placeholder="Shreddicus McRiffalicious" title="Search">
 <table class="collection" id="myTable">
 	<tr>
-		<th>Author</th>
-		<th>Riff</th>
-		<th>Last Updated</th>
-		<th>Key</th>
-		<th>Time Signature</th>
-		<th>Tags</th>
-		<th>Audio Included?</th>
-		<th>Notation Included?</th>
+		<th>Author<br><input type="text" id="author" onkeyup="search(0)" placeholder="Search" size="12"></th>
+		<th>Riff<br><input type="text" id="riff_name" onkeyup="search(1)" placeholder="Search" size="20"></th>
+		<th>Last Updated<br><input type="text" id="updated" onkeyup="search(2)" placeholder="Search" size="10"></th>
+		<th>Key<br><input type="text" id="key" onkeyup="search(3)" placeholder="Search" size="10"></th>
+		<th>Time Sig.<br><input type="text" id="time_sig" onkeyup="search(4)" placeholder="Search" size="5"></th>
+		<th>Tags<br><input type="text" id="tags" onkeyup="search(5)" placeholder="Search" size="12"></th>
+		<th><img src="{% static '/img/sound_icon.png' %}" width="40px" height=width alt=""></th>
+		<th><img src="{% static '/img/doc_icon.png' %}" width="40px" height=width alt=""></th>
 	</tr>
+
 	{% for riff in riffs %}
 
 		<!-- Only show riffs that are either owned by the user or public. -->
@@ -42,28 +44,26 @@
 
 <script>
 
-	var search_riffs = (function() {
+	function search(col_num) {
+ 
 		var input, filter, table, tr, td, i;
-		input = document.getElementById("myInput");
+		var col_ids = ["author", "riff_name", "updated", "key", "time_sig", "tags", "audio", "doc"]
+		input = document.getElementById(col_ids[col_num]);
+		filter = input.value.toUpperCase();
 		table = document.getElementById("myTable");
 		tr = table.getElementsByTagName("tr");
 
-		return function() {
-			filter = input.value.toUpperCase();
-			
-			for (i = 0; i < tr.length; i++) {
-				td = tr[i].getElementsByTagName("td")[0];
-	
-				if (td) {
-					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-						tr[i].style.display = "";
-					} else {
-						tr[i].style.display = "none";
-					}
-				}       
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[col_num];
+			if (td) {
+				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
 			}
 		}
-	})();
+	}
 
 </script>
 
