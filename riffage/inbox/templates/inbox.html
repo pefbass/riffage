@@ -1,9 +1,32 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Inbox
+<div style="margin-bottom: 10px;">	
+	<h3 style="font-weight: bold; float: left;">Inbox</h3>
+	<a href="send_message" class="btn btn-success" style='float: right;'>Send Message</a>
+	<br>
+</div>
 {% endblock %}
 
 {% block content %}
+
+<table class="inbox" id="myTable">
+	<tr>
+		<th>From</th>
+		<th>Subject</th>
+		<th>Sent</th>
+		<th>Select</th>
+	</tr>
+
+	{% for message in messages %}
+	<tr>
+		<td>{{ message.sender }}</td>
+		<td>{{ message.subject }}</td>
+		<td>{{ message.sent_time }}</td>
+		<td><input id="select" type="checkbox"></td>
+	</tr>
+	{% endfor %}
+
+</table>
 
 {% endblock %}

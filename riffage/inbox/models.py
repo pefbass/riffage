@@ -10,6 +10,15 @@ class Message(models.Model):
 		on_delete=models.CASCADE,
 		null=True)
 
+	CONTACTS = [
+		('', 'Select'),
+
+		# All users go here, once I figure out how to do that.
+
+	]
+
+	recipients = models.CharField(max_length=20, choices=CONTACTS, default='Select', verbose_name='Recipients')
+
 	subject = models.CharField(max_length=50)
 
 	body = models.CharField(max_length=1000)

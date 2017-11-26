@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}
-Edit Riff
+<div style="margin-bottom: 10px;">	
+	<h3 style="font-weight: bold; float: left;">Edit Riff</h3>
+	<a href="{% url 'collection' %}" class="btn btn-primary" style='float: right;'>Return to Collection</a>
+	<br>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -9,7 +13,7 @@ Edit Riff
 	{% csrf_token %}
 	{{ form.as_p }}
 	<button type="submit" class="btn btn-success">Save</button>
+
 </form>
-<a href="{% url 'collection' %}">Return to Collection</a>
 
 {% endblock %}
