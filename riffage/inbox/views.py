@@ -19,6 +19,21 @@ def inbox(request):
 def send_message(request):
 	params = {}
 	params['category'] = 'inbox'
+
+	if request.method == 'POST':
+		send_to_user = request.POST.get('send_to_user')
+		subject = request.POST.get('subject')
+		message = request.POST.get('message')
+
+		msg = Message(message_sent_by=request.user.username, 
+					  message_received_by=send_to_user,
+					  subject=subject,
+					  body=message)
+		msg.save()
+		params['message_saved'] = True
+		return JsonResponse(params)
+
+	'''
 	if request.method == 'POST':
 		form = MessageForm(request.POST, request.FILES)
 
@@ -30,5 +45,7 @@ def send_message(request):
 
 	else:
 		form = MessageForm()
+	'''
 
-	return render(request, 'send_message.html', {'form': form, 'params': params})
+	return render(request, 'send_message.html', {'params': params})
+	#return render(request, 'send_message.html', {'form': form, 'params': params})
