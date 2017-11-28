@@ -12,4 +12,5 @@ urlpatterns = [
      url(r'^update_user_email', views.update_user_email, name='update_user_email'),
      url(r'^update_user_account_privacy', views.update_user_account_privacy, name='update_user_account_privacy'),
      url(r'^update_user_password', views.update_user_password, name='update_user_password'),
+     url(r'^reset_password', views.reset_password, name='reset_password'),
 ]

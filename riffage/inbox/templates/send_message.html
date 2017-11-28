@@ -10,4 +10,17 @@
 
 {% block content %}
 
+
+<div class="form-group col-md-4">
+    <label for="subjectTest">Subject</label>
+	<input type="text" class="form-control" id="subjectText" 
+		placeholder="Enter subject">
+    <small id="subjectHelp" class="form-text text-muted">20 character max</small>
+</div>
+<div class="form-group col-md-8">
+    <label for="exampleTextarea">Message</label>
+	<textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+	<small id="emailHelp" class="form-text text-muted">1000 character max</small>
+	<button type="button" style="float: right"class="btn btn-success">Send</button>
+</div>
 {% endblock %}

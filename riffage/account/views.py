@@ -2,13 +2,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.contrib import auth
 from .forms import SignUpForm
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from riffage.account.models import Profile
+from riffage.account.models import Profile, PassworResetForm
+
 
 def account(request):
     params = {}
@@ -36,7 +37,7 @@ def create(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('/')
+    return redirect('/', {'password_reset_form': PasswordResetForm})
 
 def collections(request):
     return redirect('/collection')
@@ -82,4 +83,12 @@ def update_user_password(request):
         params['success'] = "True"
     
 
+    return JsonResponse(params)
+
+@csrf_exempt
+def reset_password(request):
+    params = {}
+    params['success'] = "True"
+    p = PasswordResetForm
+    p.save(request.POST.get('user_email'))
     return JsonResponse(params)
