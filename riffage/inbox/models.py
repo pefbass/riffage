@@ -17,7 +17,8 @@ class Message(models.Model):
 
 	]
 
-	recipients = models.CharField(max_length=20, choices=CONTACTS, default='Select', verbose_name='Recipients')
+	recipients = models.CharField(max_length=20, choices=CONTACTS, default='Select', 
+		verbose_name='Recipients')
 
 	subject = models.CharField(max_length=50)
 
