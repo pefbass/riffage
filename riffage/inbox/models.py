@@ -17,6 +17,12 @@ class Message(models.Model):
 
 	]
 
+	# Field to store the user id of the message sender
+	message_sent_by = models.IntegerField(null=True)
+
+	# Field to store the user id of the message receiver
+	message_received_by = models.IntegerField(null=True) 
+
 	recipients = models.CharField(max_length=20, choices=CONTACTS, default='Select', 
 		verbose_name='Recipients')
 

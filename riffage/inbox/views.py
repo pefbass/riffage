@@ -4,6 +4,7 @@ from .forms import MessageForm
 from .models import Message
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django.views.decorators.csrf import csrf_exempt
 
 def inbox(request):
 	messages = Message.objects.all()
@@ -14,6 +15,7 @@ def inbox(request):
 		{'params': params,
 		 'messages': messages})
 
+@csrf_exempt
 def send_message(request):
 	params = {}
 	params['category'] = 'inbox'

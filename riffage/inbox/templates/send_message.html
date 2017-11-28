@@ -9,23 +9,83 @@
 {% endblock %}
 
 {% block content %}
+<div id="vue-msg-div">
+	<div class="form-group col-md-4">
+		<label for="toText">To</label>
+		<input type="text" class="form-control" id="sendToUser" 
+			placeholder="Enter user" maxlength="20">
+		<small id="subjectHelp" class="form-text text-muted">20 character max</small>
+	</div>
+	<div class="form-group col-md-4">
+		<label for="subjectTest">Subject</label>
+		<input type="text" class="form-control" id="subjectText" 
+			placeholder="Enter subject" maxlength="20">
+		<small id="subjectHelp" class="form-text text-muted">20 character max</small>
+	</div>
+	<div class="form-group col-md-8">
+		<label for="exampleTextarea">Message</label>
+		<textarea class="form-control" id="messageTextArea" rows="3" maxlength="10"></textarea>
+		<small id="emailHelp" class="form-text text-muted">1000 character max</small>
+		<button type="button" v-on:click="sendMessage" style="float: right"class="btn btn-success">Send</button>
+	</div>
+</div>
+<!-- Bootstrap core JavaScript -->
+<script src="../../static/js/vue.js"></script>
+<script src="../../static/js/jquery-3.2.1.js"></script>
+<script src="../../static/popper/popper.min.js"></script>
+<script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+ <!-- Vue.js -->
+ <script>
+	
+			var app = function() {
+				var self = {};
+				
+	
+				self.sendMessage = function() {
+				  self.vue.send_to_user = document.getElementById('sendToUser').value;
+				  self.vue.subject = document.getElementById('subjectText').value;
+				  self.vue.message = document.getElementById('messageTextArea').value;
+				  console.log(self.vue.send_to_user);
+				  console.log(self.vue.subject);
+				  console.log(self.vue.message);
 
-<div class="form-group col-md-4">
-    <label for="toText">To</label>
-	<input type="text" class="form-control" id="toUserText" 
-		placeholder="Enter user">
-    <small id="subjectHelp" class="form-text text-muted">20 character max</small>
-</div>
-<div class="form-group col-md-4">
-    <label for="subjectTest">Subject</label>
-	<input type="text" class="form-control" id="subjectText" 
-		placeholder="Enter subject">
-    <small id="subjectHelp" class="form-text text-muted">20 character max</small>
-</div>
-<div class="form-group col-md-8">
-    <label for="exampleTextarea">Message</label>
-	<textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-	<small id="emailHelp" class="form-text text-muted">1000 character max</small>
-	<button type="button" style="float: right"class="btn btn-success">Send</button>
-</div>
+				  $.ajax({
+							type: "POST",
+							url: "/inbox/send_message/",
+							data: { 
+									"send_to_user": self.vue.send_to_user,
+									"subject": self.vue.subject,
+									"message": self.vue.message
+									
+									},
+							dataType: 'json',
+							success: function (json) {
+								self.vue.events = json
+								console.log(self.vue.events)
+							}
+						});
+				}
+			   
+				self.vue = new Vue({
+					el: "#vue-msg-div",
+					//rdelimiters: ['$[', ']'],
+					//unsafeDelimiters: ['!{', '}'],
+					data: {
+					   message: "",
+					   send_to_user: ""
+
+					},
+					methods: {
+						sendMessage: self.sendMessage
+					}
+				});
+				return self;
+			};
+			
+			var APP = null;
+			// This will make everything accessible from the js console;
+			// for instance, self.x above would be accessible as APP.x
+			jQuery(function(){APP = app();});
+	   
+		</script>
 {% endblock %}
