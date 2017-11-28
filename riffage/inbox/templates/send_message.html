@@ -28,6 +28,12 @@
 		<small id="emailHelp" class="form-text text-muted">1000 character max</small>
 		<button type="button" v-on:click="sendMessage" style="float: right"class="btn btn-success">Send</button>
 	</div>
+	<div class="alert alert-success col-md-6" role="alert" v-if="msg_alert == 'success'">
+		<strong>Message Sent!</strong>
+	</div>
+	<div class="alert alert-danger col-md-6" role="alert" v-if="msg_alert == 'failure'">
+		<strong>Oh snap!</strong> An error occurred
+	</div>
 </div>
 <!-- Bootstrap core JavaScript -->
 <script src="../../static/js/vue.js"></script>
@@ -42,12 +48,13 @@
 				
 	
 				self.sendMessage = function() {
+
 				  self.vue.send_to_user = document.getElementById('sendToUser').value;
 				  self.vue.subject = document.getElementById('subjectText').value;
 				  self.vue.message = document.getElementById('messageTextArea').value;
-				  console.log(self.vue.send_to_user);
-				  console.log(self.vue.subject);
-				  console.log(self.vue.message);
+				  //console.log(self.vue.send_to_user);
+				  //console.log(self.vue.subject);
+				  //console.log(self.vue.message);
 
 				  $.ajax({
 							type: "POST",
@@ -60,23 +67,29 @@
 									},
 							dataType: 'json',
 							success: function (json) {
-								self.vue.events = json
-								console.log(self.vue.events)
+								self.messageAlert(json);
+								self.vue.msg_alert = (json['message_saved'] == true) ? "success" : "failure";
 							}
 						});
 				}
 			   
+				self.messageAlert = function(json) {
+					console.log(json);
+				}
 				self.vue = new Vue({
 					el: "#vue-msg-div",
 					//rdelimiters: ['$[', ']'],
 					//unsafeDelimiters: ['!{', '}'],
 					data: {
 					   message: "",
-					   send_to_user: ""
+					   send_to_user: "",
+					   subject: "",
+					   msg_alert: ""
 
 					},
 					methods: {
-						sendMessage: self.sendMessage
+						sendMessage: self.sendMessage,
+						messageAlert: self.messageAlert
 					}
 				});
 				return self;

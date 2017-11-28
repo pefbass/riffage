@@ -24,13 +24,15 @@ def send_message(request):
 		send_to_user = request.POST.get('send_to_user')
 		subject = request.POST.get('subject')
 		message = request.POST.get('message')
-
-		msg = Message(message_sent_by=request.user.username, 
-					  message_received_by=send_to_user,
-					  subject=subject,
-					  body=message)
-		msg.save()
-		params['message_saved'] = True
+		if send_to_user and subject and message:
+			msg = Message(message_sent_by=request.user.username, 
+						message_received_by=send_to_user,
+						subject=subject,
+						body=message)
+			msg.save()
+			params['message_saved'] = True
+		else: 
+			params['message_saves'] = False
 		return JsonResponse(params)
 
 	'''
