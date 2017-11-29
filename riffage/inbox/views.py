@@ -11,9 +11,13 @@ def inbox(request):
 	users = User.objects.all()
 	params = {}
 	params['category'] = 'inbox'
+	user = request.user.username
 	return render(request, 'inbox.html',
 		{'params': params,
-		 'messages': messages})
+		 'messages': messages,
+		 'user': user
+		 })
+
 
 @csrf_exempt
 def send_message(request):

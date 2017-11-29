@@ -19,12 +19,14 @@
 	</tr>
 
 	{% for message in messages %}
+	{% if message.message_sent_by != user and message.message_received_by == user %}
 	<tr>
 		<td>{{ message.message_sent_by }}</td>
 		<td>{{ message.subject }}</td>
 		<td>{{ message.sent_time }}</td>
 		<td><input id="select" type="checkbox"></td>
 	</tr>
+	{%  endif %}
 	{% endfor %}
 
 </table>
