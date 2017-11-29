@@ -44,6 +44,10 @@ class RiffForm(ModelForm):
 
 	def clean_tags(self):
 		tags = self.cleaned_data.get('tags')
+	
+		if self.edit:
+			return tags
+
 		if Riff.objects.filter(tags=tags).exists():
 			raise ValidationError('Riff tags must be unique')
 

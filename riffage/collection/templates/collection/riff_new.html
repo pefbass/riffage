@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
 {% block title %}
 New Riff
 {% endblock %}
@@ -7,8 +10,31 @@ New Riff
 
 <form method="post" enctype="multipart/form-data">
 	{% csrf_token %}
-	{{ form.as_p }}
-	<button type="submit" class="btn btn-success" value="Save">Save</button>
+
+	{% for field in form %}
+		{% if field.errors %}
+			<div class="form-group error">
+				<label class="control-label">{{ field.label }}</label> 
+				<div class="controls">
+					{% render_field field class="form-control" %}
+					<span class="input-group-addon alert alert-danger">
+						{% for error in  field.errors %}{{ error }}{% endfor %}
+					</span>
+				</div>
+			</div>
+		{% else %}
+			<div class="form-group">
+				<label class="control-label" for="{{ field.id_for_label }}">{{ field.label }}</label> 
+				<div class="controls">
+					{% render_field field class="form-control" %}
+				</div>
+			</div>
+		{% endif %}
+	{% endfor %}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary" >Save</button>
+    </div>
 </form>
 
 {% endblock %}
