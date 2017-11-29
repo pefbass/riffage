@@ -52,12 +52,13 @@ Login
                         <form>
                             <div class="form-group" style="width: 80%">
                               <label for="exampleInputEmail1">Email Address</label>
-                              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="user@email.com">
+                              <input type="email" class="form-control" id="user_email" 
+                              aria-describedby="emailHelp" placeholder="user@email.com">
                             </div>
                           </form>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-primary">Reset</button>
+                      <button type="button" class="btn btn-primary" v-on:click="sendEmail" >Reset</button>
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                   </div>
@@ -66,9 +67,56 @@ Login
         </div>
     <!-- /.container -->
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="../../static/js/jquery-3.2.1.js"></script>
-    <script src="../../static/popper/popper.min.js"></script>
-    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+
+     <!-- Bootstrap core JavaScript -->
+     <script src="../../static/js/vue.js"></script>
+     <script src="../../static/js/jquery-3.2.1.js"></script>
+     <script src="../../static/popper/popper.min.js"></script>
+     <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+ 
+     <!-- Vue.js -->
+     <script>
+ 
+         var app = function() {
+             var self = {};
+
+ 
+             self.sendEmail = function() {
+               self.vue.email = document.getElementById('user_email').value
+               $.ajax({
+ 
+                             type: "POST",
+                             url: "/account/reset_password",
+                             data: { 
+                                     "user_email": self.vue.email
+                                   },
+                             dataType: 'json',
+                             success: function (json) {
+                                 self.vue.events = json
+                                 console.log(self.vue.events)
+                         }
+                     });
+             }
+            
+             self.vue = new Vue({
+                 el: "#vue-div",
+                 //rdelimiters: ['$[', ']'],
+                 //unsafeDelimiters: ['!{', '}'],
+                 data: {
+                    email: document.getElementById('user_email').value
+                 },
+                 methods: {
+                     sendEmail: self.sendEmail
+                 }
+             });
+             return self;
+         };
+         
+         var APP = null;
+         // This will make everything accessible from the js console;
+         // for instance, self.x above would be accessible as APP.x
+         jQuery(function(){APP = app();});
+    
+     </script>
 
 {% endblock %}

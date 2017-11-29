@@ -17,7 +17,14 @@ class Message(models.Model):
 
 	]
 
-	recipients = models.CharField(max_length=20, choices=CONTACTS, default='Select', verbose_name='Recipients')
+	# Field to store the user id of the message sender
+	message_sent_by = models.CharField(max_length=20, default='anon')
+
+	# Field to store the user id of the message receiver
+	message_received_by = models.CharField(max_length=20, default='anon')
+
+	recipients = models.CharField(max_length=20, choices=CONTACTS, default='Select', 
+		verbose_name='Recipients')
 
 	subject = models.CharField(max_length=50)
 
