@@ -34,7 +34,7 @@ def send_message(request):
 			msg.save()
 			params['message_saved'] = True
 		else: 
-			params['message_saves'] = False
+			params['message_saved'] = False
 		return JsonResponse(params)
 
 	'''
