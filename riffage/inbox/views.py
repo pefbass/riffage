@@ -51,10 +51,11 @@ def send_message(request):
 		form = MessageForm()
 	'''
 
-	return render(request, 'send_message.html', {'params': params})
-	#return render(request, 'send_message.html', {'form': form, 'params': params})
+	users = User.objects.all()
+	return render(request, 'send_message.html', {'params': params, 'users':users})
 
 def message_detail(request, pk):
 	message = get_object_or_404(Message, pk=pk)
 	message.read = True
 	return render(request, 'message_detail.html', {'message': message})
+	
