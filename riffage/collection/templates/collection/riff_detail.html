@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}
-{{ riff.name }}
+{% block title %}<div style="margin-bottom: 10px;">	
+	<h3 style="font-weight: bold; float: left;">{{ riff.name }}</h3>
+	<a href="{% url 'collection' %}" class="btn btn-primary" style='float: right;'>Return to Collection</a>
+	<br>
+</div>
 {% endblock %}
 
 {% block content %}
