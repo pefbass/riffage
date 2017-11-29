@@ -52,6 +52,7 @@ def send_message(request):
 	'''
 
 	users = User.objects.all()
+	users = User.objects.exclude(username=request.user.username)
 	return render(request, 'send_message.html', {'params': params, 'users':users})
 
 def message_detail(request, pk):
