@@ -85,6 +85,11 @@
 							success: function (json) {
 								self.messageAlert(json);
 								self.vue.msg_alert = (json['message_saved'] == true) ? "success" : "failure";
+								if(json['message_saved'] == true) {
+									document.getElementById('dropdownMenuButton').innerHTML = "Select Recipient";
+				  					document.getElementById('subjectText').value = "";
+				  					document.getElementById('messageTextArea').value = "";
+								}
 							}
 						});
 				}
