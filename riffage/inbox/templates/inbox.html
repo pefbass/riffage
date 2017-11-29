@@ -20,7 +20,7 @@
 
 	{% for message in messages %}
 	<tr>
-		<td>{{ message.sender }}</td>
+		<td>{{ message.message_sent_by }}</td>
 		<td>{{ message.subject }}</td>
 		<td>{{ message.sent_time }}</td>
 		<td><input id="select" type="checkbox"></td>

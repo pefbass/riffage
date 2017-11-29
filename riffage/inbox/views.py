@@ -26,9 +26,9 @@ def send_message(request):
 		message = request.POST.get('message')
 		if send_to_user and subject and message:
 			msg = Message(message_sent_by=request.user.username, 
-						message_received_by=send_to_user,
-						subject=subject,
-						body=message)
+						  message_received_by=send_to_user,
+						  subject=subject,
+						  body=message)
 			msg.save()
 			params['message_saved'] = True
 		else: 
