@@ -59,4 +59,9 @@ def message_detail(request, pk):
 	message = get_object_or_404(Message, pk=pk)
 	message.read = True
 	return render(request, 'message_detail.html', {'message': message})
+
+def message_delete(request, pk):
+	message = get_object_or_404(Message, pk=pk)
+	message.delete()
+	return
 	

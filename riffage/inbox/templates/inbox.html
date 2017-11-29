@@ -4,11 +4,16 @@
 <div style="margin-bottom: 10px;">	
 	<h3 style="font-weight: bold; float: left;">Inbox</h3>
 	<a href="send_message" class="btn btn-success" style='float: right;'>Send Message</a>
+	<button onclick="message_delete()" class="btn btn-danger" style='float: right;'>Delete Selected</button>
 	<br>
 </div>
 {% endblock %}
 
 {% block content %}
+
+<div id="inbox-buttons">
+</div>
+<br>
 
 <table class="inbox" id="myTable">
 	<tr>
@@ -23,10 +28,31 @@
 		<td>{{ message.message_sent_by }}</td>
 		<td><a href="{% url 'message_detail' message.pk %}">{{ message.subject }}</a></td>
 		<td>{{ message.sent_time }}</td>
-		<td><input id="select" type="checkbox"></td>
+		<td width="5%" align="center"><input id="select" type="checkbox"></td>
 	</tr>
 	{% endfor %}
 
 </table>
 
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		function message_delete() {
+			var table = document.getElementById('myTable').tBodies[0];
+			var rowCount = table.rows.length;
+
+			if (confirm('Are you sure you want to delete the selected message(s)?')) {
+
+				for(var i=1; i < rowCount; i++) {
+
+					var row = table.rows[i];
+					var cb = row.cells[3].getElementsByTagName('input')[0];
+					if(cb.type == 'checkbox' && cb.checked) {
+						table.deleteRow(i);
+					}
+				}
+			}
+		}
+	</script>
 {% endblock %}
