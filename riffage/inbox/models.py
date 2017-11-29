@@ -32,4 +32,4 @@ class Message(models.Model):
 
 	read = models.BooleanField(default=False)
 
-	sent_time = models.DateField(auto_now=True, auto_now_add=False)
+	sent_time = models.DateField(auto_now_add=True)

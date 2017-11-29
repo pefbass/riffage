@@ -7,15 +7,13 @@ from django.contrib import auth
 from django.views.decorators.csrf import csrf_exempt
 
 def inbox(request):
-	messages = Message.objects.all()
-	users = User.objects.all()
+	username = request.user.username
+	messages = Message.objects.filter(message_received_by=username)
 	params = {}
 	params['category'] = 'inbox'
-	user = request.user.username
 	return render(request, 'inbox.html',
 		{'params': params,
 		 'messages': messages,
-		 'user': user
 		 })
 
 
@@ -55,3 +53,8 @@ def send_message(request):
 
 	return render(request, 'send_message.html', {'params': params})
 	#return render(request, 'send_message.html', {'form': form, 'params': params})
+
+def message_detail(request, pk):
+	message = get_object_or_404(Message, pk=pk)
+	message.read = True
+	return render(request, 'message_detail.html', {'message': message})

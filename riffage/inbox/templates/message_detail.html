@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div style="overflow: hidden">
+		<div style="float: left; margin-bottom: 20px">
+			<strong style="font-size: x-large">{{ message.subject }}</strong>
+			<div>Sent by {{ message.message_sent_by }} on {{ message.sent_time|date:'d N Y' }}</div>
+		</div>
+		<a href="{% url 'inbox' %}" class="btn btn-primary" style='float: right;'>Return to Inbox</a>
+	</div>
+
+	<div>
+		{{ message.body }}
+	</div>
+
+{% endblock %}
