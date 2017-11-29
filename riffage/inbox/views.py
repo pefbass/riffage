@@ -52,6 +52,6 @@ def send_message(request):
 	else:
 		form = MessageForm()
 	'''
-
-	return render(request, 'send_message.html', {'params': params})
+	users = User.objects.all()
+	return render(request, 'send_message.html', {'params': params, 'users':users})
 	#return render(request, 'send_message.html', {'form': form, 'params': params})
