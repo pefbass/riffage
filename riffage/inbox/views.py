@@ -63,5 +63,5 @@ def message_detail(request, pk):
 def message_delete(request, pk):
 	message = get_object_or_404(Message, pk=pk)
 	message.delete()
-	return
+	return redirect('inbox')
 	
