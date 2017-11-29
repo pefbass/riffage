@@ -56,9 +56,12 @@ def send_message(request):
 	return render(request, 'send_message.html', {'params': params, 'users':users})
 
 def message_detail(request, pk):
+	params = {}
+	params['category'] = 'inbox'
+	
 	message = get_object_or_404(Message, pk=pk)
 	message.read = True
-	return render(request, 'message_detail.html', {'message': message})
+	return render(request, 'message_detail.html', {'params': params, 'message': message})
 
 def message_delete(request, pk):
 	message = get_object_or_404(Message, pk=pk)
