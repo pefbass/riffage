@@ -30,7 +30,7 @@ def publish(self):
 def __return__username__(self):
     return self.username
 
-class PassworResetForm(forms.Form):
+class PasswordResetForm(forms.Form):
     error_messages = {
         'unknown': ("That email address doesn't have an associated "
                      "user account. Are you sure you've registered?"),
@@ -68,7 +68,7 @@ class PassworResetForm(forms.Form):
             if not domain_override:
                 current_site = get_current_site(request)
                 site_name = current_site.name
-                domain = current_site.domain
+                domain = current_site.domainoo
             else:
                 site_name = domain = domain_override
             c = {
