@@ -59,9 +59,7 @@
 					self.vue.send_to_user = document.getElementById('dropdownMenuButton').innerHTML;
 					self.vue.subject = document.getElementById('subjectText').value;
 					self.vue.message = document.getElementById('messageTextArea').value;
-					//console.log(self.vue.send_to_user);
-					//console.log(self.vue.subject);
-					//console.log(self.vue.message);
+
 					if(self.vue.send_to_user == "Select Recipient") self.vue.msg_alert = "failure";
 					else {
 						$.ajax({
@@ -99,8 +97,6 @@
 
 				self.vue = new Vue({
 					el: "#vue-msg-div",
-					//rdelimiters: ['$[', ']'],
-					//unsafeDelimiters: ['!{', '}'],
 					data: {
 						message: "",
 						send_to_user: "",

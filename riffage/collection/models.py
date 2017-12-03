@@ -3,6 +3,7 @@ from django.db import models
 from django.forms import forms
 from riffage.account.models import Profile
 from riffage.collection.custom import SeparatedValuesField
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Riff(models.Model):
 	name = models.CharField(max_length=20)
@@ -52,7 +53,12 @@ class Riff(models.Model):
 
 	riff_key = models.CharField(max_length=20, choices=KEY_CHOICES, default='Select', verbose_name='Key')
 
-	timesig_num = models.IntegerField(default=4, verbose_name='Time Signature Numerator')
+	timesig_num = models.IntegerField(default=4, 
+		validators=[
+			MaxValueValidator(99),
+			MinValueValidator(1)
+			], 
+		verbose_name='Time Signature Numerator')
 
 	TIMESIG_DENOM_CHOICES = [
 		(1, '1'),

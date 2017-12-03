@@ -37,20 +37,6 @@ def send_message(request):
 			params['message_saved'] = False
 		return JsonResponse(params)
 
-	'''
-	if request.method == 'POST':
-		form = MessageForm(request.POST, request.FILES)
-
-		if form.is_valid():
-			message = form.save(commit=False)
-			message.save()
-
-			return redirect('inbox')
-
-	else:
-		form = MessageForm()
-	'''
-
 	users = User.objects.all()
 	users = User.objects.exclude(username=request.user.username)
 	return render(request, 'send_message.html', {'params': params, 'users':users})

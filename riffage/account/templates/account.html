@@ -58,7 +58,7 @@ Account Settings
 				{% endif %}
 				<span class="custom-control-indicator"></span>
 				<span class="custom-control-description" style="font-weight: bold">Private Account?</span>
-				<p style="display: inline; margin-left: 3em">Private accounts cannot be viewed by other users and all riffs will be set to "private"</p>
+				<p style="display: inline; margin-left: 3em">Private accounts cannot be viewed by other users and all riffs will be set to <em>private</em>.</p>
 			</label>
 			</div> 
 			<div class="col-md-3">
@@ -86,15 +86,15 @@ Account Settings
 						<input type="password" class="form-control" id="new_password1" placeholder="Password">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1">New Password (again)</label>
+						<label for="exampleInputPassword1">Confirm New Password</label>
 						<input type="password" class="form-control" id="new_password2" placeholder="Password">
 					</div>
 				</div>
 				<div class="alert alert-success" v-if="passwdChange">
-					<strong>Success!</strong> Your password has been changed
+					<strong>Success!</strong> Your password has been changed.
 				</div>
 				<div class="alert alert-danger" v-if="passwdError">
-					<strong>Error!</strong> There is an error in the password field
+					<strong>Error!</strong> Please ensure the old password is correct and the new password fields match.
 				</div>
 				<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -121,8 +121,6 @@ Account Settings
 		var privacy = String(document.getElementById('private_account').innerHTML);
 		var checkbox = document.getElementById('account_checkbox');
 		checkbox.value = (privacy == "True") ? 'on' : 'off';
-		//console.log(privacy);
-		//console.log(checkbox.value);
 
 		var app = function() {
 			var self = {};
@@ -144,14 +142,10 @@ Account Settings
 			}
 
 			self.toggleAccountPrivacy = function() {
-				//console.log(self.vue.private_account);
 				var check = document.getElementById('account_checkbox');
-				//console.log(check.value);
 				checkbox.value = (checkbox.value == 'on') ? 'off' : 'on';
-				//console.log(checkbox.value);
 				self.vue.private_account = checkbox.value;
-				//console.log("Checkbox = " + checkbox.value);
-				//console.log("Vue_account = " + self.vue.private_account);
+
 				$.ajax({
 
 							type: "POST",
@@ -238,8 +232,6 @@ Account Settings
 			}
 			self.vue = new Vue({
 				el: "#vue-div",
-				//rdelimiters: ['$[', ']'],
-				//unsafeDelimiters: ['!{', '}'],
 				data: {
 					 isActive: false,
 					 isActiveEmail: false,
