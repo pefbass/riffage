@@ -72,5 +72,18 @@ class RiffForm(ModelForm):
 			raise ValidationError('Invalid file extension: type must be one of ' + ', '.join(self.AUDIO_EXTENSIONS))
 
 		return audio_file
+	
+	DOCUMENT_EXTENSIONS = ['.pdf', '.odt', '.odg', '.odp'] + Riff.IMAGE_EXTENSIONS
 
+	def clean_document(self):
+		document = self.cleaned_data.get('document')
 
+		if not document:
+			return  document
+
+		_, file_extension = splitext(document.name)
+
+		if not file_extension in self.DOCUMENT_EXTENSIONS:
+			raise ValidationError('Invalid file extension: type must be one of ' + ', '.join(self.DOCUMENT_EXTENSIONS))
+		
+		return document
