@@ -38,8 +38,14 @@
 	<div class="alert alert-success col-md-6" role="alert" v-if="msg_alert == 'success'">
 		<strong>Message Sent!</strong>
 	</div>
-	<div class="alert alert-danger col-md-6" role="alert" v-if="msg_alert == 'failure'">
-		<strong>Oh snap!</strong> An error occurred
+	<div class="alert alert-danger col-md-6" role="alert" v-if="msg_alert == 'failure_recipient'">
+		<strong>Oh snap!</strong> Please select a recipient
+	</div>
+	<div class="alert alert-danger col-md-6" role="alert" v-if="msg_alert == 'failure_subject'">
+		<strong>Oh snap!</strong> Please fill out the 'subject' field
+	</div>
+	<div class="alert alert-danger col-md-6" role="alert" v-if="msg_alert == 'failure_message'">
+		<strong>Oh snap!</strong> Please fill out the 'message' field
 	</div>
 </div>
 <!-- Bootstrap core JavaScript -->
@@ -59,10 +65,10 @@
 					self.vue.send_to_user = document.getElementById('dropdownMenuButton').innerHTML;
 					self.vue.subject = document.getElementById('subjectText').value;
 					self.vue.message = document.getElementById('messageTextArea').value;
-					//console.log(self.vue.send_to_user);
-					//console.log(self.vue.subject);
-					//console.log(self.vue.message);
-					if(self.vue.send_to_user == "Select Recipient") self.vue.msg_alert = "failure";
+					
+					if(self.vue.send_to_user == "Select Recipient") self.vue.msg_alert = "failure_recipient";
+					else if (self.vue.subject == "") self.vue.msg_alert = "failure_subject";
+					else if (self.vue.message == "") self.vue.msg_alert = "failure_message";
 					else {
 						$.ajax({
 							type: "POST",
@@ -99,8 +105,6 @@
 
 				self.vue = new Vue({
 					el: "#vue-msg-div",
-					//rdelimiters: ['$[', ']'],
-					//unsafeDelimiters: ['!{', '}'],
 					data: {
 						message: "",
 						send_to_user: "",
