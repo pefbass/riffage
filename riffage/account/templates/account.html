@@ -86,15 +86,15 @@ Account Settings
 						<input type="password" class="form-control" id="new_password1" placeholder="Password">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1">New Password (again)</label>
+						<label for="exampleInputPassword1">Confirm New Password</label>
 						<input type="password" class="form-control" id="new_password2" placeholder="Password">
 					</div>
 				</div>
 				<div class="alert alert-success" v-if="passwdChange">
-					<strong>Success!</strong> Your password has been changed
+					<strong>Success!</strong> Your password has been changed.
 				</div>
 				<div class="alert alert-danger" v-if="passwdError">
-					<strong>Error!</strong> There is an error in the password field
+					<strong>Error!</strong> Please ensure the old password is correct and the new password fields match.
 				</div>
 				<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
