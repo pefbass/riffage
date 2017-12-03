@@ -1,6 +1,8 @@
 from django.forms import ModelForm, ValidationError
 from os.path import splitext
 from .models import Riff
+from riffage.collection.custom import SeparatedValuesField
+
 
 class RiffForm(ModelForm):
 	class Meta:
@@ -44,12 +46,17 @@ class RiffForm(ModelForm):
 
 	def clean_tags(self):
 		tags = self.cleaned_data.get('tags')
+		TAGS_CHECKER = [ SeparatedValuesField('tags') ]
 	
 		if self.edit:
 			return tags
 
-		if Riff.objects.filter(tags=tags).exists():
-			raise ValidationError('Riff tags must be unique')
+		for i in range(0,len(TAGS_CHECKER)):
+			if Riff.objects.filter(tags=tags).exists() or (TAGS_CHECKER[i] == Riff.objects.filter(tags=tags)):
+				if(TAGS_CHECKER[i + 1] is None):
+					break
+				
+				raise ValidationError('Riff tags must be unique')
 
 		return tags
 	
