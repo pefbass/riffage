@@ -61,6 +61,7 @@ def message_detail(request, pk):
 	
 	message = get_object_or_404(Message, pk=pk)
 	message.read = True
+	message.save()
 	return render(request, 'message_detail.html', {'params': params, 'message': message})
 
 def message_delete(request, pk):

@@ -16,6 +16,8 @@ class Riff(models.Model):
 			on_delete=models.CASCADE,
 			null=True)
 
+	last_updated = models.DateField(auto_now_add=True)
+
 	KEY_CHOICES = [
 		('', 'Select'),
 

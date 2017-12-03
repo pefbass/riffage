@@ -30,7 +30,7 @@
 			<tr>
 				<td>{{ riff.author.user }}</td>
 				<td><a href="{% url 'riff_detail' pk=riff.pk %}">{{ riff.name }}</a></td>
-				<td>Yesterday</td>
+				<td>{{ riff.last_updated }}</td>
 				<td>{{ riff.riff_key }}</td>
 				<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
 				<td>{{ riff.tags }}</td>

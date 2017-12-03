@@ -20,6 +20,7 @@
 		<th>From</th>
 		<th>Subject</th>
 		<th>Sent</th>
+		<th>Read?</th>
 		<th>Select</th>
 	</tr>
 
@@ -28,7 +29,9 @@
 		<td>{{ message.message_sent_by }}</td>
 		<td><a href="{% url 'message_detail' message.pk %}">{{ message.subject }}</a></td>
 		<td>{{ message.sent_time }}</td>
+		<td>{{ message.read|yesno:'Yes!,No!'}}</td>
 		<td width="5%" align="center"><input id="select" type="checkbox"></td>
+		<td style="display: none;">{{ message.pk }}</td>
 	</tr>
 	{% endfor %}
 
@@ -37,19 +40,23 @@
 {% endblock %}
 
 {% block scripts %}
+	<script src="../../static/js/jquery-3.2.1.js"></script>
+
 	<script>
+		
 		function message_delete() {
-			var table = document.getElementById('myTable').tBodies[0];
-			var rowCount = table.rows.length;
+			let table = document.getElementById('myTable').tBodies[0];
 
 			if (confirm('Are you sure you want to delete the selected message(s)?')) {
 
-				for(var i=1; i < rowCount; i++) {
-
-					var row = table.rows[i];
-					var cb = row.cells[3].getElementsByTagName('input')[0];
+				for(let i=1; i < table.rows.length; i++) {
+					let row = table.rows[i];
+					let cb = row.cells[4].getElementsByTagName('input')[0];
 					if(cb.type == 'checkbox' && cb.checked) {
 						table.deleteRow(i);
+						i--;
+						let pk = row.cells[5].innerText;
+						$.ajax('/inbox/message_delete/' + pk);
 					}
 				}
 			}

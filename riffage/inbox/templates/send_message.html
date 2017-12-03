@@ -10,20 +10,11 @@
 
 {% block content %}
 <div id="vue-msg-div">
-	<!--
-	<div class="form-group col-md-4">
-		<label for="toText">To</label>
-		<input type="text" class="form-control" id="sendToUser" 
-			placeholder="Enter user" maxlength="20">
-		<small id="subjectHelp" class="form-text text-muted">20 character max</small>
-	</div>
-	-->
 	<div class="form-group col-md-4">
 			<label for="toText">To</label>
 			<div class="dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Select Recipient
-				</button>
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" 
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Recipient</button>
 				<div class="dropdown-menu" style="height: auto; max-height: 6em; overflow-x: hidden" 
 						aria-labelledby="dropdownMenuButton">
 					{% for user in users %}
@@ -71,8 +62,9 @@
 				  //console.log(self.vue.send_to_user);
 				  //console.log(self.vue.subject);
 				  //console.log(self.vue.message);
-
-				  $.ajax({
+				  if(self.vue.send_to_user == "Select Recipient") self.vue.msg_alert = "failure";
+				  else {
+					  $.ajax({
 							type: "POST",
 							url: "/inbox/send_message/",
 							data: { 
@@ -92,6 +84,7 @@
 								}
 							}
 						});
+				  }
 				}
 			   
 				self.messageAlert = function(json) {
