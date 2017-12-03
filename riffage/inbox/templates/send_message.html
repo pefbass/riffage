@@ -56,15 +56,15 @@
 	
 				self.sendMessage = function() {
 
-				  self.vue.send_to_user = document.getElementById('dropdownMenuButton').innerHTML;
-				  self.vue.subject = document.getElementById('subjectText').value;
-				  self.vue.message = document.getElementById('messageTextArea').value;
-				  //console.log(self.vue.send_to_user);
-				  //console.log(self.vue.subject);
-				  //console.log(self.vue.message);
-				  if(self.vue.send_to_user == "Select Recipient") self.vue.msg_alert = "failure";
-				  else {
-					  $.ajax({
+					self.vue.send_to_user = document.getElementById('dropdownMenuButton').innerHTML;
+					self.vue.subject = document.getElementById('subjectText').value;
+					self.vue.message = document.getElementById('messageTextArea').value;
+					//console.log(self.vue.send_to_user);
+					//console.log(self.vue.subject);
+					//console.log(self.vue.message);
+					if(self.vue.send_to_user == "Select Recipient") self.vue.msg_alert = "failure";
+					else {
+						$.ajax({
 							type: "POST",
 							url: "/inbox/send_message/",
 							data: { 
@@ -79,14 +79,14 @@
 								self.vue.msg_alert = (json['message_saved'] == true) ? "success" : "failure";
 								if(json['message_saved'] == true) {
 									document.getElementById('dropdownMenuButton').innerHTML = "Select Recipient";
-				  					document.getElementById('subjectText').value = "";
-				  					document.getElementById('messageTextArea').value = "";
+									document.getElementById('subjectText').value = "";
+									document.getElementById('messageTextArea').value = "";
 								}
 							}
 						});
-				  }
+					}
 				}
-			   
+
 				self.messageAlert = function(json) {
 					console.log(json);
 				}
@@ -102,11 +102,10 @@
 					//rdelimiters: ['$[', ']'],
 					//unsafeDelimiters: ['!{', '}'],
 					data: {
-					   message: "",
-					   send_to_user: "",
-					   subject: "",
-					   msg_alert: ""
-
+						message: "",
+						send_to_user: "",
+						subject: "",
+						msg_alert: ""
 					},
 					methods: {
 						sendMessage: self.sendMessage,
