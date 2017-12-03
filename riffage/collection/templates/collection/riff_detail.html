@@ -10,7 +10,9 @@
 
 {% block content %}
 
-	<p><em>{{ riff.priv_vis|yesno:"Private,Public" }}</em></p>
+	<p>Last updated on {{ riff.last_updated}}.</p>
+
+	<p><em>{{ riff.priv_vis|yesno:"Private,Public" }} riff.</em></p>
 	{% if riff.audio_file %}
 		<audio controls>
 			<source src="{{ riff.audio_file.url }}">
