@@ -8,7 +8,7 @@ from .forms import SignUpForm
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from riffage.account.models import Profile, PassworResetForm
+from riffage.account.models import Profile, PasswordResetForm
 
 
 def account(request):
