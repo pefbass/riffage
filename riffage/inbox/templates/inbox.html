@@ -20,6 +20,7 @@
 		<th>From</th>
 		<th>Subject</th>
 		<th>Sent</th>
+		<th>Read?</th>
 		<th>Select</th>
 	</tr>
 
@@ -28,6 +29,7 @@
 		<td>{{ message.message_sent_by }}</td>
 		<td><a href="{% url 'message_detail' message.pk %}">{{ message.subject }}</a></td>
 		<td>{{ message.sent_time }}</td>
+		<td>{{ message.read|yesno:'Yes!,No!'}}</td>
 		<td width="5%" align="center"><input id="select" type="checkbox"></td>
 	</tr>
 	{% endfor %}
@@ -38,6 +40,7 @@
 
 {% block scripts %}
 	<script>
+		
 		function message_delete() {
 			var table = document.getElementById('myTable').tBodies[0];
 			var rowCount = table.rows.length;
@@ -47,7 +50,7 @@
 				for(var i=1; i < rowCount; i++) {
 
 					var row = table.rows[i];
-					var cb = row.cells[3].getElementsByTagName('input')[0];
+					var cb = row.cells[4].getElementsByTagName('input')[0];
 					if(cb.type == 'checkbox' && cb.checked) {
 						table.deleteRow(i);
 					}
