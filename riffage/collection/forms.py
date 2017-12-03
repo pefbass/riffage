@@ -51,8 +51,11 @@ class RiffForm(ModelForm):
 		if self.edit:
 			return tags
 
-		#for i in range(0,50):
-			if Riff.objects.filter(tags=tags).exists():
+		for i in range(0,len(TAGS_CHECKER)):
+			if Riff.objects.filter(tags=tags).exists() or (TAGS_CHECKER[i] == Riff.objects.filter(tags=tags)):
+				if(TAGS_CHECKER[i + 1] is None):
+					break
+				
 				raise ValidationError('Riff tags must be unique')
 
 		return tags
