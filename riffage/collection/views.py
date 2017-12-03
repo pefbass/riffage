@@ -8,7 +8,8 @@ from django.contrib import auth
 def collection(request):
 	riffs = Riff.objects.all()
 	users = User.objects.all()
-	#riff.priv_vis == False or riff.author == user.profile or (riff.author != user.profile and riff.author.profile.private_account == False)
+	# Leave in for future use
+	# riff.priv_vis == False or riff.author == user.profile or (riff.author != user.profile and riff.author.profile.private_account == False)
 	params = {}
 	params['category'] = 'collections'
 	return render(request, 'collection/collection.html',
@@ -45,9 +46,6 @@ def riff_edit(request, pk):
 	riff = get_object_or_404(Riff, pk=pk)
 	if request.method == "POST":
 		form = RiffForm(request.POST, request.FILES, instance=riff, edit=True)
-#		if riff.author.private_account:
-#			print("PRIVATE ACCOUNT!!")
-#		riff.priv_precedence()
 		if form.is_valid():
 			riff = form.save(commit=False)
 			riff.save()
