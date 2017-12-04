@@ -44,6 +44,7 @@ class RiffForm(ModelForm):
 	
 	AUDIO_EXTENSIONS = ['.wav', '.mp3']
 
+	#Cleans the tags and makes sure no 2 tags have the exact same tags
 	def clean_tags(self):
 		tags = self.cleaned_data.get('tags')
 	
