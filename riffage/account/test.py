@@ -71,3 +71,13 @@ class TestAccountApp(TestCase):
             username_found = True
 
         self.assertTrue(username_found)
+
+    def test_user_privacy(self):
+        privacy_accurate = False
+        self.user = User.objects.create_user(username='testuser', password='password_1')
+        login = self.client.login(username='testuser', password='password_1')
+
+        if (self.user.profile.private_account == True):
+            privacy_accurate = True
+
+        self.assertTrue(privacy_accurate)
