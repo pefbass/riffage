@@ -41,3 +41,33 @@ class TestAccountApp(TestCase):
         login = self.client.login(username='testuser', password='password_2')
 
         self.assertFalse(login)
+    
+    def test_user_bio_input(self):
+        bio_updated = False
+        self.user = User.objects.create_user(username='testuser', password='password_1')
+        login = self.client.login(username='testuser', password='password_1')
+
+        if (self.user.profile.bio == ""):
+            bio_updated = True
+
+        self.assertTrue(bio_updated)
+
+    def test_user_email(self):
+        email_found = False
+        self.user = User.objects.create_user(username='testuser', password='password_1')
+        login = self.client.login(username='testuser', password='password_1')
+
+        if (self.user.email == ""):
+            email_found = True
+
+        self.assertTrue(email_found)
+
+    def test_user_username(self):
+        username_found = False
+        self.user = User.objects.create_user(username='testuser', password='password_1')
+        login = self.client.login(username='testuser', password='password_1')
+
+        if (self.user.username == "testuser"):
+            username_found = True
+
+        self.assertTrue(username_found)
