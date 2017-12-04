@@ -17,7 +17,12 @@ class NewRiffTest(TestCase):
 			'desc': 'A really great riff!',
 			'tab': 'G |----|\nD |----|\nA |----|\nE |0000|\n',
 			'tags': 'sweaty, slimy'
+		},
+		{
+			'audio_file': SimpleUploadedFile('song.mp3', bytes(1234)),
+			'document': SimpleUploadedFile('song.pdf', bytes(1234))
 		})
+
 		self.assertTrue(form.is_valid())
 
 		riff = form.save()
@@ -69,3 +74,11 @@ class NewRiffTest(TestCase):
 		})
 
 		self.assertEqual(form.non_field_errors(), ['Must provide either a tab or an audio file'])
+
+	def test_invalid_document_filetype(self):
+		form = RiffForm({}, {'document': SimpleUploadedFile('song.docx', bytes(1234))})
+
+		error_message = 'Invalid file extension: type must be one of ' + ', '.join(RiffForm.DOCUMENT_EXTENSIONS)
+
+		self.assertIn('document', form.errors)
+		self.assertEqual(form.errors['document'], [error_message])
