@@ -14,35 +14,38 @@ from .models import Message
 
 class TestInboxApp(TestCase):
 	
-    def test_send_message_page(self):
-        msg_found = False
-        msg = Message(    message_sent_by="test_user_1", 
-						  message_received_by="test_user_2",
-						  subject="Test",
-						  body="Test")
-        msg.save()
-        
-        messages = Message.objects.all()
+	def test_send_message_page(self):
+		msg_found = False
+		msg = Message(
+			message_sent_by="test_user_1", 
+			message_received_by="test_user_2",
+			subject="Test",
+			body="Test")
 
-        for message in messages:
-            if (message.subject == "Test" and message.body == "Test" and message.message_sent_by == "test_user_1"):
-                msg_found = True
+		msg.save()
+		
+		messages = Message.objects.all()
 
-        self.assertTrue(msg_found)
-    
-    def test_receive_message_page(self):
-        msg_found = False
-        msg = Message(    message_sent_by="test_user_1", 
-						  message_received_by="test_user_2",
-						  subject="Test",
-						  body="Test")
-        msg.save()
-        
-        messages = Message.objects.all()
+		for message in messages:
+			if (message.subject == "Test" and message.body == "Test" and message.message_sent_by == "test_user_1"):
+				msg_found = True
 
-        for message in messages:
-            if (message.subject == "Test" and message.body == "Test" and message.message_received_by == "test_user_2"):
-                msg_found = True
+		self.assertTrue(msg_found)
+	
+	def test_receive_message_page(self):
+		msg_found = False
+		msg = Message(message_sent_by="test_user_1", 
+			message_received_by="test_user_2",
+			subject="Test",
+			body="Test")
 
-        self.assertTrue(msg_found)
+		msg.save()
+
+		messages = Message.objects.all()
+
+		for message in messages:
+			if (message.subject == "Test" and message.body == "Test" and message.message_received_by == "test_user_2"):
+				msg_found = True
+
+		self.assertTrue(msg_found)
 
