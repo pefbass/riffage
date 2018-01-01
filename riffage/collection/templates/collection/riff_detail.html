@@ -10,7 +10,7 @@
 
 {% block content %}
 
-	<p>Last updated on {{ riff.last_updated}}.</p>
+	<p>Last updated on {{ riff.last_updated }}.</p>
 
 	<p><em>{{ riff.priv_vis|yesno:"Private,Public" }} riff.</em></p>
 	{% if riff.audio_file %}
@@ -70,7 +70,7 @@
 	{% if riff.author == user.profile %}
 		<div>
 			<a href="{% url 'riff_edit' riff.pk %}" class="btn btn-primary">Edit Riff</a>
-			<button onclick="delete_riff()" class="btn btn-danger">Delete Riff</button>		
+			<button onclick="riff_delete()" class="btn btn-danger">Delete Riff</button>		
 		</div>
 	{% endif %}
 
@@ -78,9 +78,9 @@
 
 {% block scripts %}
 	<script>
-		function delete_riff() {
+		function riff_delete() {
 			if (confirm('Are you sure you want to delete {{ riff.name }}?')) {
-				window.location = "{% url 'delete_riff' riff.pk %}";
+				window.location = "{% url 'riff_delete' riff.pk %}";
 			}
 		}
 	</script>

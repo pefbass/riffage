@@ -33,7 +33,7 @@
 		<label for="exampleTextarea">Message</label>
 		<textarea class="form-control" id="messageTextArea" rows="3" maxlength="1000"></textarea>
 		<small id="emailHelp" class="form-text text-muted">1000 character max</small>
-		<button type="button" v-on:click="sendMessage" style="float: right"class="btn btn-success">Send</button>
+		<button type="button" v-on:click="message_send" style="float: right"class="btn btn-success">Send</button>
 	</div>
 	<div class="alert alert-success col-md-6" role="alert" v-if="msg_alert == 'success'">
 		<strong>Message Sent!</strong>
@@ -60,7 +60,7 @@
 				var self = {};
 				
 	
-				self.sendMessage = function() {
+				self.message_send = function() {
 
 					self.vue.send_to_user = document.getElementById('dropdownMenuButton').innerHTML;
 					self.vue.subject = document.getElementById('subjectText').value;
@@ -72,7 +72,7 @@
 					else {
 						$.ajax({
 							type: "POST",
-							url: "/inbox/send_message/",
+							url: "/inbox/message_send/",
 							data: { 
 									"send_to_user": self.vue.send_to_user,
 									"subject": self.vue.subject,
@@ -81,7 +81,7 @@
 									},
 							dataType: 'json',
 							success: function (json) {
-								self.messageAlert(json);
+								self.message_alert(json);
 								self.vue.msg_alert = (json['message_saved'] == true) ? "success" : "failure";
 								if(json['message_saved'] == true) {
 									document.getElementById('dropdownMenuButton').innerHTML = "Select Recipient";
@@ -112,8 +112,8 @@
 						msg_alert: ""
 					},
 					methods: {
-						sendMessage: self.sendMessage,
-						messageAlert: self.messageAlert,
+						message_send: self.message_send,
+						message_alert: self.message_alert,
 						setReceiver: self.setReceiver
 					}
 				});

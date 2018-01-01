@@ -60,7 +60,7 @@ def logout(request):
     auth.logout(request)
     return redirect('index')
 
-def delete_riff(request, pk):
+def riff_delete(request, pk):
 	riff = get_object_or_404(Riff, pk=pk)
 	riff.delete()
 	return redirect('collection')

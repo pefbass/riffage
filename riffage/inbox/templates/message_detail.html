@@ -15,13 +15,13 @@
 	</div>
 
 	<div>
-		<button onclick="delete_message()" class="btn btn-danger">Delete Message</button>		
+		<button onclick="message_delete()" class="btn btn-danger">Delete Message</button>		
 	</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-	function delete_message() {
+	function message_delete() {
 		if (confirm('Are you sure you want to delete this message?')) {
 			window.location = "{% url 'message_delete' message.pk %}";
 		}

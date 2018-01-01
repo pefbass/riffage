@@ -18,7 +18,7 @@ def inbox(request):
 
 
 @csrf_exempt
-def send_message(request):
+def message_send(request):
 	params = {}
 	params['category'] = 'inbox'
 
@@ -39,7 +39,7 @@ def send_message(request):
 
 	users = User.objects.all()
 	users = User.objects.exclude(username=request.user.username)
-	return render(request, 'send_message.html', {'params': params, 'users':users})
+	return render(request, 'message_send.html', {'params': params, 'users':users})
 
 def message_detail(request, pk):
 	params = {}
