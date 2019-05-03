@@ -1,5 +1,7 @@
 db.sqlite3
 *.pyc
+*~
+__pycache__
 _static_root
 _media_root
 myvenv
