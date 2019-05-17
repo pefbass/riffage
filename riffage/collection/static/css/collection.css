@@ -9,7 +9,34 @@
 
 .tablature {
 	font-family: Courier New, monospace;
-	line-height: 20px;
+  line-height: 20px;
+  width: 100%;
+}
+
+table, th, td {
+  padding-right: 5px;
+  padding-top: 5px;
+}
+
+#riff-form {
+  width: 100%;
+}
+
+#id_timesig_num {
+  width: 45px;
+}
+
+#id_tab {
+  width: 100%;
+  height: 130px;
+  line-height: 17px;
+  padding: 5px;
+  font-family: Courier New, monospace;
+}
+
+#id_desc {
+  width: 100%;
+  height: 50px;
 }
 
 * {

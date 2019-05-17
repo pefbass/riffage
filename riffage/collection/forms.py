@@ -24,11 +24,11 @@ class RiffForm(ModelForm):
 		audio = data.get('audio_file')
 
 		# get default value for tab field and remove newlines from the end
-		default_tab = Riff.TAB_DEFAULT.strip('\n')
+		# default_tab = Riff.TAB_DEFAULT.strip('\n')
 
 		# if audio doesn't exist and tab doesn't exist or is the default value
-		if not audio and (not tab or tab == default_tab):
-			raise ValidationError('Must provide either a tab or an audio file')
+		# if not audio and (not tab or tab == default_tab):
+		# 	raise ValidationError('Must provide either a tab or an audio file')
 
 	def clean_name(self):
 		name = self.cleaned_data.get('name')

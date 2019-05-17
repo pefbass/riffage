@@ -10,30 +10,87 @@ New Riff
 
 <form method="post" enctype="multipart/form-data">
 	{% csrf_token %}
+	<table id="riff-form">
+		<tr>
+			<td>
+				{{ form.name.label_tag }}
+			</td>
+			<td>
+				{{ form.name }}
+				{{ form.name.errors }}
+			</td>
+			<td>
+				{{ form.audio_file.label_tag }}
+			</td>
+			<td>
+				{{ form.audio_file }}
+				{{ form.audio_file.errors }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{{ form.tags.label_tag }}
+			</td>
+			<td>
+				{{ form.tags }}
+				{{ form.tags.errors}}
+			</td>
+			<td>
+				{{ form.document.label_tag }}
+			</td>
+			<td>
+				{{ form.document }}
+				{{ form.document.errors }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label class="control-label" for="timesig">
+					Time Signature:
+				</label>
+			</td>
+			<td>
+				{{ form.timesig_num }} / {{ form.timesig_denom }}
+				{{ form.timesig_num.errors }}
+				{{ form.timesig_denom.errors }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{{ form.riff_key.label_tag }}
+			</td>
+			<td>
+				{{ form.riff_key }}
+				{{ form.riff_key.errors }}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				{{ form.tab.label_tag }}
+				{{ form.tab }}
+				{{ form.tab.errors }}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				{{ form.desc.label_tag }}
+				{{ form.desc }}
+				{{ form.desc.errors }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{{ form.priv_vis.label_tag }}
+			</td>
+			<td>
+				{{ form.priv_vis }}
+				{{ form.priv_vis.errors }}
+			</td>
+		</tr>
+	</table>
 
-	{% for field in form %}
-		{% if field.errors %}
-			<div class="form-group error">
-				<label class="control-label">{{ field.label }}</label> 
-				<div class="controls">
-					{% render_field field class="form-control" %}
-					<span class="input-group-addon alert alert-danger">
-						{% for error in  field.errors %}{{ error }}{% endfor %}
-					</span>
-				</div>
-			</div>
-		{% else %}
-			<div class="form-group">
-				<label class="control-label" for="{{ field.id_for_label }}">{{ field.label }}</label> 
-				<div class="controls">
-					{% render_field field class="form-control" %}
-				</div>
-			</div>
-		{% endif %}
-	{% endfor %}
-
-	<div class="form-actions">
-		<button type="submit" class="btn btn-primary" >Save</button>
+	<div class="form-actions" align="right">
+		<button type="submit" class="btn btn-success">Save</button>
 	</div>
 </form>
 
