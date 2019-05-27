@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<div style="margin-bottom: 10px;">	
-	<h3 style="font-weight: bold; float: left;">Send Message</h3>
-	<a href="{% url 'inbox' %}" class="btn btn-primary" style='float: right;'>Return to Inbox</a>
-	<br>
+<div style="margin-bottom: 10px;">
+	<table style="width:100%">
+		<tr>
+			<td>
+				<h3 class="section-heading">Send Message</h3>
+			</td>
+			<td>
+				<a href="{% url 'inbox' %}" class="btn btn-primary" style='float: right;'>Return to Inbox</a>
+			</td>
+		</tr>
+	</table>
 </div>
 {% endblock %}
 

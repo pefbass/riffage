@@ -1,6 +1,5 @@
 .collection {
 	border: 1px solid black;
-
 }
 
 .riff_detail {
@@ -8,9 +7,30 @@
 }
 
 .tablature {
-	font-family: Courier New, monospace;
-  line-height: 20px;
+  
   width: 100%;
+  height: 130px;
+  line-height: 17px;
+  padding: 5px;
+  font-family: Courier New, monospace;
+}
+
+.private_tag {
+  float: left;
+  background-color: blue;
+  color: rgb(113, 146, 255);
+  border: 2px solid rgb(113, 146, 255);
+  text-align: center;
+  font-weight: bold;
+}
+
+.public_tag {
+  float: left;
+  background-color: red;
+  color: rgb(255, 146, 146);
+  border: 2px solid rgb(255, 146, 146);
+  text-align: center;
+  font-weight: bold;
 }
 
 table, th, td {

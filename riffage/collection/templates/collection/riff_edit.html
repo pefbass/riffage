@@ -3,9 +3,17 @@
 {% load widget_tweaks %}
 
 {% block title %}
-<div style="margin-bottom: 10px;">	
-	<h3 style="font-weight: bold; float: left;">Edit Riff</h3>
-	<a href="{% url 'collection' %}" class="btn btn-primary" style='float: right;'>Return to Collection</a>
+<div style="margin-bottom: 10px;">
+	<table style="width:100%">
+		<tr>
+			<td>
+				<h3 class="section-heading">Edit Riff</h3>
+			</td>
+			<td>
+				<a href="{% url 'collection' %}" class="btn btn-primary" style='float: right;'>Return to Collection</a>
+			</td>
+		</tr>
+	</table>
 	<br>
 </div>
 {% endblock %}

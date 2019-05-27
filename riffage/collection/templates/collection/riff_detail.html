@@ -1,71 +1,72 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}<div style="margin-bottom: 10px;">	
-	<h3 style="font-weight: bold; float: left;">{{ riff.name }}</h3>
-	<a href="{% url 'collection' %}" class="btn btn-primary" style='float: right;'>Return to Collection</a>
+{% block title %}
+<div style="margin-bottom: 10px;">
+	<table style="width:100%">
+		<tr>
+			<td>
+				<h3 class="section-heading">
+					{{ riff.name }}
+				</h3>
+			</td>
+			<td>
+				<a href="{% url 'collection' %}" class="btn btn-primary" style='float: right;'>Return to Collection</a>
+			</td>
+		</tr>
+	</table>
+
+	<p>Last updated on {{ riff.last_updated }}</p>
+	<div style="padding: 5px;">
+		{% if riff.priv_vis %}
+			<div class="private_tag">Private</div>
+		{% else %}
+			<div class="public_tag">Public</div>
+		{% endif %}
+	</div>
 	<br>
 </div>
 {% endblock %}
 
 {% block content %}
 
-	<p>Last updated on {{ riff.last_updated }}.</p>
-
-	<p><em>{{ riff.priv_vis|yesno:"Private,Public" }} riff.</em></p>
 	{% if riff.audio_file %}
 		<audio controls>
 			<source src="{{ riff.audio_file.url }}">
 		</audio>
 	{% endif %}
 
-	<table class="table">
-		<colgroup>
-			<col style="width:20%">
-			<col>
-		</colgroup>
-		<tr>
-			<th>Key:</th>
-			<td>{{ riff.riff_key }}</td>
-		</tr>
-		<tr>
-			<th>Time Signature:</th>
-			<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
-		</tr>
-		<tr>
-			<th>Description:</th>
-			<td>{{ riff.desc }}</td>
-		</tr>
-		<tr>
-			<th>Tablature:</th>
-			<td>		
-				<div class="tablature">
-					<pre>{{ riff.tab }}</pre>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<th>Tags:</th>
-			<td>{{ riff.tags }}</td>
-		</tr>
-		{% if riff.document %}
-		<tr>
-			<th>Riff Documentation:</th>
-			<td>
-				{% if riff.document_is_image %}
-				<img src="{{ riff.document.url }}">
-				{% else %}
-				<iframe src="{% static 'js/ViewerJS/index.html' %}#{{ riff.document.url }}"
-						width='400'
-						height='300'
-						allowfullscreen webkitallowfullscreen>
-				</iframe>
-				{% endif %}
-			</td>
-		</tr>
+	<div style="width: 50%">
+		<table id="riff-form">
+			<tr>
+				<td>Tags:</td>
+				<td>{{ riff.tags }}</td>
+			</tr>
+			<tr>
+				<td>Time Signature:</td>
+				<td>{{ riff.timesig_num }}/{{ riff.timesig_denom }}</td>
+			</tr>
+			<tr>
+				<td>Key:</td>
+				<td>{{ riff.riff_key }}</td>
+			</tr>
+		</table>
+	</div>
+	<br>
+	<textarea class="tablature" disabled>{{ riff.tab }}</textarea>
+	{% if riff.document %}
+		{% if riff.document_is_image %}
+			<img src="{{ riff.document.url }}">
+		{% else %}
+			<iframe src="{% static 'js/ViewerJS/index.html' %}#{{ riff.document.url }}"
+					width='400'
+					height='300'
+					allowfullscreen webkitallowfullscreen>
+			</iframe>
 		{% endif %}
-	</table>
-	
+	{% endif %}
+	<br><br>
+
 	<!-- If the current user is not the author, they should not be able to edit/delete. -->
 	{% if riff.author == user.profile %}
 		<div>
@@ -73,6 +74,7 @@
 			<button onclick="riff_delete()" class="btn btn-danger">Delete Riff</button>		
 		</div>
 	{% endif %}
+
 
 {% endblock %}
 
