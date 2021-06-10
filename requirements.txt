@@ -1,4 +1,4 @@
-Django==1.11.6
+Django==2.2.24
 django-appconf==1.0.2
 django-widget-tweaks==1.4.1
 pkg-resources==1.0.0
